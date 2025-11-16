@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { getUser, setUser } from '../utils/auth';
+import { useTheme } from '../contexts/ThemeContext';
 import SectionHeader from '../components/SectionHeader';
-import { User, Bell, Lock, Palette } from 'lucide-react';
+import { User, Bell, Lock, Palette, Sun, Moon, Monitor } from 'lucide-react';
 
 const Settings = () => {
   const user = getUser();
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('profile');
   const [formData, setFormData] = useState({
     name: user?.name || '',
@@ -201,25 +203,105 @@ const Settings = () => {
 
           {activeTab === 'appearance' && (
             <div className="card">
-              <h2 className="text-xl font-bold mb-6">Appearance</h2>
-              <div className="space-y-4">
+              <h2 className="text-xl font-bold mb-6 dark:text-white">Appearance</h2>
+              <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Theme
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    Theme Preference
                   </label>
-                  <div className="grid grid-cols-3 gap-4">
-                    <button className="p-4 border-2 border-primary-600 rounded-lg bg-white">
-                      <div className="w-full h-20 bg-white border border-gray-200 rounded mb-2"></div>
-                      <p className="text-sm font-medium">Light</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Choose how lstBooks looks to you. Select a single theme, or sync with your system preferences.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Light Theme */}
+                    <button
+                      onClick={() => setTheme('light')}
+                      className={`p-4 border-2 rounded-lg transition-all ${
+                        theme === 'light'
+                          ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-center mb-3">
+                        <Sun className="w-8 h-8 text-yellow-500" />
+                      </div>
+                      <div className="w-full h-20 bg-white border border-gray-200 rounded mb-3 flex items-center justify-center">
+                        <div className="space-y-2 w-full px-3">
+                          <div className="h-2 bg-gray-200 rounded"></div>
+                          <div className="h-2 bg-gray-300 rounded w-3/4"></div>
+                          <div className="h-2 bg-gray-200 rounded w-1/2"></div>
+                        </div>
+                      </div>
+                      <p className="text-sm font-medium dark:text-white">Light</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Bright and clear
+                      </p>
                     </button>
-                    <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-gray-300">
-                      <div className="w-full h-20 bg-gray-800 rounded mb-2"></div>
-                      <p className="text-sm font-medium">Dark</p>
+
+                    {/* Dark Theme */}
+                    <button
+                      onClick={() => setTheme('dark')}
+                      className={`p-4 border-2 rounded-lg transition-all ${
+                        theme === 'dark'
+                          ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-center mb-3">
+                        <Moon className="w-8 h-8 text-indigo-500" />
+                      </div>
+                      <div className="w-full h-20 bg-gray-900 border border-gray-700 rounded mb-3 flex items-center justify-center">
+                        <div className="space-y-2 w-full px-3">
+                          <div className="h-2 bg-gray-700 rounded"></div>
+                          <div className="h-2 bg-gray-600 rounded w-3/4"></div>
+                          <div className="h-2 bg-gray-700 rounded w-1/2"></div>
+                        </div>
+                      </div>
+                      <p className="text-sm font-medium dark:text-white">Dark</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Easy on the eyes
+                      </p>
                     </button>
-                    <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-gray-300">
-                      <div className="w-full h-20 bg-gradient-to-br from-white to-gray-800 rounded mb-2"></div>
-                      <p className="text-sm font-medium">Auto</p>
+
+                    {/* Auto Theme */}
+                    <button
+                      onClick={() => setTheme('auto')}
+                      className={`p-4 border-2 rounded-lg transition-all ${
+                        theme === 'auto'
+                          ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-center mb-3">
+                        <Monitor className="w-8 h-8 text-blue-500" />
+                      </div>
+                      <div className="w-full h-20 bg-gradient-to-br from-white via-gray-400 to-gray-900 border border-gray-300 rounded mb-3"></div>
+                      <p className="text-sm font-medium dark:text-white">Auto</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Sync with system
+                      </p>
                     </button>
+                  </div>
+                </div>
+
+                {/* Current Theme Info */}
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0">
+                      {theme === 'light' && <Sun className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                      {theme === 'dark' && <Moon className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                      {theme === 'auto' && <Monitor className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                        Current theme: {theme.charAt(0).toUpperCase() + theme.slice(1)}
+                      </p>
+                      <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                        {theme === 'auto'
+                          ? 'Theme automatically switches based on your system preferences'
+                          : `You're using ${theme} mode across all pages`}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
