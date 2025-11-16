@@ -14,21 +14,39 @@ const Dashboard = () => {
   const user = getUser();
 
   useEffect(() => {
-    if (user) {
-      fetchDashboardData();
-    }
-  }, [user]);
+    fetchDashboardData();
+  }, []);
 
   const fetchDashboardData = async () => {
     try {
-      const [statsResponse, progressResponse] = await Promise.all([
-        getDashboardStats(user.id),
-        getUserProgress(user.id)
-      ]);
-      setStats(statsResponse.data);
-      setProgress(progressResponse.data);
+      // If user is logged in, fetch their personal data
+      if (user?.id) {
+        const [statsResponse, progressResponse] = await Promise.all([
+          getDashboardStats(user.id),
+          getUserProgress(user.id)
+        ]);
+        setStats(statsResponse.data);
+        setProgress(progressResponse.data);
+      } else {
+        // If no user, set default empty stats
+        setStats({
+          totalStudyTime: 0,
+          totalQuizzes: 0,
+          averageScore: 0,
+          totalFlashcardsReviewed: 0
+        });
+        setProgress([]);
+      }
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      // Set default stats on error
+      setStats({
+        totalStudyTime: 0,
+        totalQuizzes: 0,
+        averageScore: 0,
+        totalFlashcardsReviewed: 0
+      });
+      setProgress([]);
     } finally {
       setLoading(false);
     }
