@@ -23,6 +23,7 @@ import Search from './pages/Search';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
+import About from './pages/About';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="about" element={<About />} />
           </Route>
         </Routes>
       </Router>

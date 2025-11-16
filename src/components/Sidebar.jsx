@@ -1,13 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Home, 
-  BookOpen, 
-  Stethoscope, 
-  FlaskConical, 
-  ClipboardList, 
-  Brain, 
-  CreditCard, 
+import {
+  Home,
+  BookOpen,
+  Stethoscope,
+  FlaskConical,
+  ClipboardList,
+  Brain,
+  CreditCard,
   LayoutDashboard,
+  Info,
   X
 } from 'lucide-react';
 import clsx from 'clsx';
@@ -21,6 +22,7 @@ const menuItems = [
   { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: Info, label: 'About', path: '/about' },
 ];
 
 const Sidebar = ({ isOpen, onClose }) => {
