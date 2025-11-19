@@ -13,6 +13,8 @@ import Discussions from './pages/Discussions';
 import DiscussionDetail from './pages/DiscussionDetail';
 import StudyGroups from './pages/StudyGroups';
 import StudyGroupDetail from './pages/StudyGroupDetail';
+import PeerReviews from './pages/PeerReviews';
+import PeerReviewDetail from './pages/PeerReviewDetail';
 import Subjects from './pages/Subjects';
 import SubjectDetail from './pages/SubjectDetail';
 import ClinicalSkills from './pages/ClinicalSkills';
@@ -72,6 +74,8 @@ function App() {
             <Route path="discussions/:id" element={<DiscussionDetail />} />
             <Route path="study-groups" element={<StudyGroups />} />
             <Route path="study-groups/:id" element={<StudyGroupDetail />} />
+            <Route path="peer-reviews" element={<PeerReviews />} />
+            <Route path="peer-reviews/:id" element={<PeerReviewDetail />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
