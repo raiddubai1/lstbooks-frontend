@@ -21,7 +21,8 @@ import {
   UsersRound,
   FileCheck,
   Share2,
-  Sparkles
+  Sparkles,
+  Trophy
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -41,6 +42,8 @@ const studentMenuItems = [
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FileText, label: 'Case Generator', path: '/case-generator' },
+  { icon: Trophy, label: 'Gamification', path: '/gamification' },
+  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
@@ -66,6 +69,8 @@ const teacherMenuItems = [
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FileText, label: 'Case Generator', path: '/case-generator' },
+  { icon: Trophy, label: 'Gamification', path: '/gamification' },
+  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -91,6 +96,8 @@ const adminMenuItems = [
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FileText, label: 'Case Generator', path: '/case-generator' },
+  { icon: Trophy, label: 'Gamification', path: '/gamification' },
+  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: Users, label: 'User Management', path: '/admin/users' },
   { icon: BookOpen, label: 'Content Management', path: '/subjects' },

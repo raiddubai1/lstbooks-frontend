@@ -20,6 +20,8 @@ import SharedResourceDetail from './pages/SharedResourceDetail';
 import AIStudyAssistant from './pages/AIStudyAssistant';
 import OSCECoach from './pages/OSCECoach';
 import CaseGenerator from './pages/CaseGenerator';
+import Gamification from './pages/Gamification';
+import Leaderboard from './pages/Leaderboard';
 import Subjects from './pages/Subjects';
 import SubjectDetail from './pages/SubjectDetail';
 import ClinicalSkills from './pages/ClinicalSkills';
@@ -86,6 +88,8 @@ function App() {
             <Route path="ai-study-assistant" element={<AIStudyAssistant />} />
             <Route path="osce-coach" element={<OSCECoach />} />
             <Route path="case-generator" element={<CaseGenerator />} />
+            <Route path="gamification" element={<Gamification />} />
+            <Route path="leaderboard" element={<Leaderboard />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
