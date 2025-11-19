@@ -32,3 +32,30 @@ export const logout = () => {
   removeUser();
 };
 
+// Role-based helper functions
+export const getUserRole = () => {
+  const user = getUser();
+  return user?.role || 'student';
+};
+
+export const isStudent = () => {
+  return getUserRole() === 'student';
+};
+
+export const isTeacher = () => {
+  return getUserRole() === 'teacher';
+};
+
+export const isAdmin = () => {
+  return getUserRole() === 'admin';
+};
+
+export const canManageContent = () => {
+  const role = getUserRole();
+  return role === 'teacher' || role === 'admin';
+};
+
+export const canManageUsers = () => {
+  return isAdmin();
+};
+
