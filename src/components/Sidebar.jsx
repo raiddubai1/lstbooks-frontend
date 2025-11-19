@@ -9,11 +9,16 @@ import {
   CreditCard,
   LayoutDashboard,
   Info,
-  X
+  X,
+  Users,
+  Shield,
+  BarChart3
 } from 'lucide-react';
 import clsx from 'clsx';
+import { getUserRole } from '../utils/auth';
 
-const menuItems = [
+// Menu items for students
+const studentMenuItems = [
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
@@ -25,8 +30,40 @@ const menuItems = [
   { icon: Info, label: 'About', path: '/about' },
 ];
 
+// Menu items for teachers
+const teacherMenuItems = [
+  { icon: Home, label: 'Home', path: '/' },
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: BookOpen, label: 'Subjects', path: '/subjects' },
+  { icon: Brain, label: 'Quizzes', path: '/quizzes' },
+  { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: FlaskConical, label: 'Labs', path: '/labs' },
+  { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+  { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: Info, label: 'About', path: '/about' },
+];
+
+// Menu items for admins
+const adminMenuItems = [
+  { icon: Home, label: 'Home', path: '/' },
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: Users, label: 'User Management', path: '/admin/users' },
+  { icon: BookOpen, label: 'Content Management', path: '/subjects' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: Shield, label: 'Settings', path: '/settings' },
+  { icon: Info, label: 'About', path: '/about' },
+];
+
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
+  const userRole = getUserRole();
+
+  // Select menu items based on user role
+  const menuItems =
+    userRole === 'admin' ? adminMenuItems :
+    userRole === 'teacher' ? teacherMenuItems :
+    studentMenuItems;
 
   return (
     <>

@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { getDashboardStats, getUserProgress } from '../services/api';
-import { getUser } from '../utils/auth';
+import { getUser, getUserRole } from '../utils/auth';
 import SectionHeader from '../components/SectionHeader';
 import ProgressBar from '../components/ProgressBar';
 import Loading from '../components/Loading';
 import { TrendingUp, Brain, Clock, Award, BookOpen, Target } from 'lucide-react';
+import TeacherDashboard from './TeacherDashboard';
+import AdminDashboard from './AdminDashboard';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = getUser();
+  const userRole = getUserRole();
 
   useEffect(() => {
     fetchDashboardData();
@@ -54,6 +57,16 @@ const Dashboard = () => {
 
   if (loading) return <Loading />;
 
+  // Route to appropriate dashboard based on role
+  if (userRole === 'teacher') {
+    return <TeacherDashboard />;
+  }
+
+  if (userRole === 'admin') {
+    return <AdminDashboard />;
+  }
+
+  // Student Dashboard (default)
   return (
     <div>
       <SectionHeader
