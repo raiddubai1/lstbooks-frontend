@@ -21,9 +21,7 @@ import {
   UsersRound,
   FileCheck,
   Share2,
-  Sparkles,
-  Stethoscope,
-  FileText
+  Sparkles
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
