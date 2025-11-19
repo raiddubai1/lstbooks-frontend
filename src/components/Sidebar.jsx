@@ -13,7 +13,8 @@ import {
   Users,
   Shield,
   BarChart3,
-  GraduationCap
+  GraduationCap,
+  TrendingUp
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -22,6 +23,7 @@ import { getUserRole } from '../utils/auth';
 const studentMenuItems = [
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
@@ -36,6 +38,7 @@ const studentMenuItems = [
 const teacherMenuItems = [
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -51,6 +54,7 @@ const teacherMenuItems = [
 const adminMenuItems = [
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: Users, label: 'User Management', path: '/admin/users' },
   { icon: BookOpen, label: 'Content Management', path: '/subjects' },
