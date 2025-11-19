@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ArrowLeft, BookOpen, Video, FileText, ExternalLink, Download, Clock, FileType } from 'lucide-react';
+import { ArrowLeft, BookOpen, Video, FileText, ExternalLink, Download, Clock, FileType, Plus } from 'lucide-react';
 import SubjectCard from '../components/SubjectCard';
+import VideoSummaryCard from '../components/VideoSummaryCard';
+import PDFNoteCard from '../components/PDFNoteCard';
+import AddResourceModal from '../components/AddResourceModal';
+import { isTeacher, isAdmin } from '../utils/auth';
 
 const YearDetail = () => {
   const { id } = useParams();
@@ -11,6 +15,10 @@ const YearDetail = () => {
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('subjects');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [resourceType, setResourceType] = useState('video');
+
+  const canManageContent = isTeacher() || isAdmin();
 
   useEffect(() => {
     fetchYearDetails();
@@ -26,6 +34,15 @@ const YearDetail = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddResource = (type) => {
+    setResourceType(type);
+    setShowAddModal(true);
+  };
+
+  const handleResourceAdded = () => {
+    fetchYearDetails(); // Refresh data
   };
 
   const getYearColor = (order) => {
@@ -90,40 +107,53 @@ const YearDetail = () => {
       {/* Tabs */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
-            <button
-              onClick={() => setActiveTab('subjects')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'subjects'
-                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-            >
-              <BookOpen className="w-5 h-5 inline mr-2" />
-              Subjects ({subjects.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('videos')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'videos'
-                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-            >
-              <Video className="w-5 h-5 inline mr-2" />
-              Video Summaries ({year.resources?.videoSummaries?.length || 0})
-            </button>
-            <button
-              onClick={() => setActiveTab('pdfs')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'pdfs'
-                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-            >
-              <FileText className="w-5 h-5 inline mr-2" />
-              PDF Notes ({year.resources?.pdfNotes?.length || 0})
-            </button>
+          <div className="flex items-center justify-between">
+            <div className="flex space-x-8">
+              <button
+                onClick={() => setActiveTab('subjects')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'subjects'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                }`}
+              >
+                <BookOpen className="w-5 h-5 inline mr-2" />
+                Subjects ({subjects.length})
+              </button>
+              <button
+                onClick={() => setActiveTab('videos')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'videos'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                }`}
+              >
+                <Video className="w-5 h-5 inline mr-2" />
+                Video Summaries ({year.resources?.videoSummaries?.length || 0})
+              </button>
+              <button
+                onClick={() => setActiveTab('pdfs')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'pdfs'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                }`}
+              >
+                <FileText className="w-5 h-5 inline mr-2" />
+                PDF Notes ({year.resources?.pdfNotes?.length || 0})
+              </button>
+            </div>
+
+            {/* Add Resource Button (Teachers/Admins only) */}
+            {canManageContent && activeTab !== 'subjects' && (
+              <button
+                onClick={() => handleAddResource(activeTab === 'videos' ? 'video' : 'pdf')}
+                className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add {activeTab === 'videos' ? 'Video' : 'PDF'}</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -148,22 +178,57 @@ const YearDetail = () => {
           </div>
         )}
 
-        {/* Videos Tab - Placeholder for now */}
+        {/* Videos Tab */}
         {activeTab === 'videos' && (
-          <div className="text-center py-12">
-            <Video className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500 dark:text-gray-400">Video summaries coming soon!</p>
+          <div>
+            {!year.resources?.videoSummaries || year.resources.videoSummaries.length === 0 ? (
+              <div className="text-center py-12">
+                <Video className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500 dark:text-gray-400">No video summaries available yet.</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">
+                  Teachers can add video summaries for this year.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {year.resources.videoSummaries.map((video, index) => (
+                  <VideoSummaryCard key={index} video={video} />
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {/* PDFs Tab - Placeholder for now */}
+        {/* PDFs Tab */}
         {activeTab === 'pdfs' && (
-          <div className="text-center py-12">
-            <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500 dark:text-gray-400">PDF notes coming soon!</p>
+          <div>
+            {!year.resources?.pdfNotes || year.resources.pdfNotes.length === 0 ? (
+              <div className="text-center py-12">
+                <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500 dark:text-gray-400">No PDF notes available yet.</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">
+                  Teachers can add PDF notes for this year.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {year.resources.pdfNotes.map((pdf, index) => (
+                  <PDFNoteCard key={index} pdf={pdf} />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* Add Resource Modal */}
+      <AddResourceModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        yearId={id}
+        resourceType={resourceType}
+        onSuccess={handleResourceAdded}
+      />
     </div>
   );
 };
