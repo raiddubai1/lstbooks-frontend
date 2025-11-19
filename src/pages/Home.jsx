@@ -57,7 +57,7 @@ const Home = () => {
 
       {/* Features Grid */}
       <div className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Explore Features</h2>
+        <h2 className="text-2xl font-bold mb-6 dark:text-white">Explore Features</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature) => {
             const Icon = feature.icon;
@@ -70,9 +70,9 @@ const Home = () => {
                 <div className={`w-12 h-12 ${feature.color} rounded-lg flex items-center justify-center mb-4`}>
                   <Icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                <p className="text-sm text-gray-600 mb-4">{feature.description}</p>
-                <div className="flex items-center text-primary-600 text-sm font-medium">
+                <h3 className="font-semibold text-lg mb-2 dark:text-white">{feature.title}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{feature.description}</p>
+                <div className="flex items-center text-primary-600 dark:text-primary-400 text-sm font-medium">
                   Explore <ArrowRight className="w-4 h-4 ml-1" />
                 </div>
               </Link>
@@ -82,30 +82,30 @@ const Home = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className="card bg-gradient-to-br from-primary-50 to-purple-50 border-primary-100">
+      <div className="card bg-gradient-to-br from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 border-primary-100 dark:border-primary-800">
         <div className="flex items-center gap-3 mb-4">
-          <TrendingUp className="w-6 h-6 text-primary-600" />
-          <h2 className="text-xl font-bold">Your Progress</h2>
+          <TrendingUp className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+          <h2 className="text-xl font-bold dark:text-white">Your Progress</h2>
         </div>
         <div className="grid md:grid-cols-4 gap-6">
           <div>
-            <p className="text-3xl font-bold text-primary-600">5</p>
-            <p className="text-sm text-gray-600">Subjects Enrolled</p>
+            <p className="text-3xl font-bold text-primary-600 dark:text-primary-400">5</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Subjects Enrolled</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-green-600">12</p>
-            <p className="text-sm text-gray-600">Quizzes Completed</p>
+            <p className="text-3xl font-bold text-green-600 dark:text-green-400">12</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Quizzes Completed</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-purple-600">85%</p>
-            <p className="text-sm text-gray-600">Average Score</p>
+            <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">85%</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Average Score</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-orange-600">24h</p>
-            <p className="text-sm text-gray-600">Study Time</p>
+            <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">24h</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Study Time</p>
           </div>
         </div>
-        <Link to="/dashboard" className="mt-6 inline-flex items-center text-primary-600 font-medium hover:text-primary-700">
+        <Link to="/dashboard" className="mt-6 inline-flex items-center text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300">
           View detailed analytics <ArrowRight className="w-4 h-4 ml-1" />
         </Link>
       </div>

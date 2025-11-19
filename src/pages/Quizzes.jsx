@@ -91,12 +91,12 @@ const Quizzes = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Quizzes</h1>
-          <p className="text-gray-600 mt-2">Test your knowledge with interactive quizzes</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Quizzes</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Test your knowledge with interactive quizzes</p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+          className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center gap-2"
         >
           <Plus className="w-5 h-5" />
           Add Quiz
@@ -131,10 +131,10 @@ const Quizzes = () => {
 
       {/* Quizzes Grid */}
       {filteredQuizzes.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No quizzes found</h3>
-          <p className="text-gray-600 mb-4">
+        <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <BookOpen className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No quizzes found</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
             {searchQuery || selectedSubject
               ? 'Try adjusting your search or filters'
               : 'Get started by adding your first quiz'}
@@ -142,7 +142,7 @@ const Quizzes = () => {
           {!searchQuery && !selectedSubject && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+              className="bg-blue-600 dark:bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors inline-flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
               Add First Quiz
@@ -158,31 +158,31 @@ const Quizzes = () => {
             return (
               <div
                 key={quiz._id}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-blue-300 transition-all"
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-600 transition-all"
               >
                 <div className="p-6">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <BookOpen className="w-6 h-6 text-purple-600" />
+                    <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <BookOpen className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
                         {quiz.title}
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {quiz.subjectId && (
-                          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                          <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-2 py-1 rounded">
                             {quiz.subjectId.name}
                           </span>
                         )}
                         {quiz.timeLimit && (
-                          <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded flex items-center gap-1">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 px-2 py-1 rounded flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             {Math.floor(quiz.timeLimit / 60)}min
                           </span>
                         )}
                         {quiz.shuffleQuestions && (
-                          <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">
+                          <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 px-2 py-1 rounded">
                             🔀 Shuffled
                           </span>
                         )}
@@ -191,7 +191,7 @@ const Quizzes = () => {
                   </div>
 
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                       <span>{quiz.questions?.length || 0} questions</span>
                       <span>•</span>
                       <span>{totalPoints} points</span>
@@ -199,11 +199,11 @@ const Quizzes = () => {
 
                     {stats && stats.attemptsCount > 0 && (
                       <div className="flex items-center gap-4 text-sm">
-                        <div className="flex items-center gap-1 text-green-600">
+                        <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
                           <Award className="w-4 h-4" />
                           <span className="font-medium">{stats.averagePercent.toFixed(0)}%</span>
                         </div>
-                        <div className="flex items-center gap-1 text-blue-600">
+                        <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400">
                           <Users className="w-4 h-4" />
                           <span>{stats.attemptsCount} attempts</span>
                         </div>
@@ -212,10 +212,10 @@ const Quizzes = () => {
                   </div>
                 </div>
 
-                <div className="border-t border-gray-200 bg-gray-50 px-6 py-3">
+                <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 px-6 py-3">
                   <Link
                     to={`/quizzes/${quiz._id}/take`}
-                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center justify-center gap-2"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm flex items-center justify-center gap-2"
                   >
                     Take Quiz →
                   </Link>

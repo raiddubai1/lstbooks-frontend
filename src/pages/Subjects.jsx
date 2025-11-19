@@ -86,7 +86,7 @@ const Subjects = () => {
 
       {filteredSubjects.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">
+          <p className="text-gray-500 dark:text-gray-400">
             {searchQuery ? 'No subjects found matching your search' : 'No subjects available'}
           </p>
           {!searchQuery && (

@@ -8,16 +8,16 @@ const SubjectCard = ({ subject }) => {
   return (
     <Link
       to={`/subjects/${subject._id}`}
-      className="card hover:shadow-lg hover:border-primary-300 transition-all cursor-pointer"
+      className="card hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all cursor-pointer"
     >
       <div className="mb-4">
-        <h3 className="font-semibold text-xl mb-2 text-gray-900">{subject.name}</h3>
-        <p className="text-sm text-gray-600 line-clamp-2">
+        <h3 className="font-semibold text-xl mb-2 text-gray-900 dark:text-white">{subject.name}</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
           {subject.description}
         </p>
       </div>
 
-      <div className="flex items-center gap-4 text-xs text-gray-500 pt-4 border-t border-gray-100">
+      <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-100 dark:border-gray-700">
         <div className="flex items-center gap-1">
           <BookOpen className="w-4 h-4" />
           <span>{subject.resources?.length || 0} resources</span>
