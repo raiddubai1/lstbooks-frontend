@@ -16,7 +16,8 @@ import {
   GraduationCap,
   TrendingUp,
   FileText,
-  Bookmark
+  Bookmark,
+  MessageSquare
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -29,6 +30,7 @@ const studentMenuItems = [
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+  { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
@@ -47,6 +49,7 @@ const teacherMenuItems = [
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+  { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -65,6 +68,7 @@ const adminMenuItems = [
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+  { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: Users, label: 'User Management', path: '/admin/users' },
   { icon: BookOpen, label: 'Content Management', path: '/subjects' },
