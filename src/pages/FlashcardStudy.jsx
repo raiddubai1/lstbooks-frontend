@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getFlashcards } from '../services/api';
-import { ArrowLeft, ChevronLeft, ChevronRight, RotateCw, CheckCircle, XCircle } from 'lucide-react';
+import axios from 'axios';
+import { ArrowLeft, ChevronLeft, ChevronRight, RotateCw, CheckCircle, XCircle, Frown, Meh, Smile, Zap } from 'lucide-react';
 
 const FlashcardStudy = () => {
   const navigate = useNavigate();
@@ -49,30 +50,80 @@ const FlashcardStudy = () => {
     }
   };
 
+  // SRS Rating System (0-5 scale)
+  // 0: Complete blackout, 1: Incorrect, 2: Incorrect but remembered, 3: Correct but difficult, 4: Correct with hesitation, 5: Perfect recall
+  const handleSRSRating = async (quality) => {
+    const currentCard = flashcards[currentIndex];
+
+    // Calculate new SRS values using SM-2 algorithm
+    let easeFactor = 2.5; // Default ease factor
+    let interval = 0;
+    let repetitions = 0;
+
+    // Simple SM-2 algorithm implementation
+    if (quality >= 3) {
+      // Correct response
+      if (repetitions === 0) {
+        interval = 1;
+      } else if (repetitions === 1) {
+        interval = 6;
+      } else {
+        interval = Math.round(interval * easeFactor);
+      }
+      repetitions += 1;
+      easeFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+    } else {
+      // Incorrect response
+      repetitions = 0;
+      interval = 1;
+    }
+
+    // Ensure ease factor doesn't go below 1.3
+    easeFactor = Math.max(1.3, easeFactor);
+
+    try {
+      // Send to backend
+      await axios.post(`${import.meta.env.VITE_API_URL}/progress/flashcard-review`, {
+        flashcardId: currentCard._id,
+        subjectId: currentCard.subjectId,
+        quality,
+        easeFactor,
+        interval,
+        repetitions
+      });
+
+      // Update local state based on quality
+      if (quality >= 4) {
+        const newLearned = new Set(learned);
+        newLearned.add(currentCard._id);
+        setLearned(newLearned);
+
+        const newReviewLater = new Set(reviewLater);
+        newReviewLater.delete(currentCard._id);
+        setReviewLater(newReviewLater);
+      } else if (quality <= 2) {
+        const newReviewLater = new Set(reviewLater);
+        newReviewLater.add(currentCard._id);
+        setReviewLater(newReviewLater);
+
+        const newLearned = new Set(learned);
+        newLearned.delete(currentCard._id);
+        setLearned(newLearned);
+      }
+
+      handleNext();
+    } catch (error) {
+      console.error('Error recording flashcard review:', error);
+      handleNext(); // Still move to next card even if API fails
+    }
+  };
+
   const handleMarkLearned = () => {
-    const newLearned = new Set(learned);
-    newLearned.add(flashcards[currentIndex]._id);
-    setLearned(newLearned);
-    
-    // Remove from review later if it was there
-    const newReviewLater = new Set(reviewLater);
-    newReviewLater.delete(flashcards[currentIndex]._id);
-    setReviewLater(newReviewLater);
-    
-    handleNext();
+    handleSRSRating(5); // Perfect recall
   };
 
   const handleMarkReviewLater = () => {
-    const newReviewLater = new Set(reviewLater);
-    newReviewLater.add(flashcards[currentIndex]._id);
-    setReviewLater(newReviewLater);
-    
-    // Remove from learned if it was there
-    const newLearned = new Set(learned);
-    newLearned.delete(flashcards[currentIndex]._id);
-    setLearned(newLearned);
-    
-    handleNext();
+    handleSRSRating(1); // Incorrect
   };
 
   const handleKeyPress = (e) => {
@@ -209,23 +260,53 @@ const FlashcardStudy = () => {
         </div>
       </div>
 
-      {/* Action Buttons */}
+      {/* SRS Rating Buttons */}
       {isFlipped && (
-        <div className="max-w-3xl mx-auto mb-8 flex gap-4 justify-center">
-          <button
-            onClick={handleMarkReviewLater}
-            className="flex-1 max-w-xs bg-orange-100 text-orange-700 border-2 border-orange-300 px-6 py-3 rounded-lg hover:bg-orange-200 transition-colors flex items-center justify-center gap-2"
-          >
-            <XCircle className="w-5 h-5" />
-            Review Later
-          </button>
-          <button
-            onClick={handleMarkLearned}
-            className="flex-1 max-w-xs bg-green-100 text-green-700 border-2 border-green-300 px-6 py-3 rounded-lg hover:bg-green-200 transition-colors flex items-center justify-center gap-2"
-          >
-            <CheckCircle className="w-5 h-5" />
-            Mark as Learned
-          </button>
+        <div className="max-w-4xl mx-auto mb-8">
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">
+            How well did you know this?
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <button
+              onClick={() => handleSRSRating(1)}
+              className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-2 border-red-300 dark:border-red-700 px-4 py-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors flex flex-col items-center gap-2"
+            >
+              <Frown className="w-6 h-6" />
+              <span className="text-xs font-semibold">Again</span>
+              <span className="text-xs opacity-75">&lt;1 day</span>
+            </button>
+
+            <button
+              onClick={() => handleSRSRating(2)}
+              className="bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 border-2 border-orange-300 dark:border-orange-700 px-4 py-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors flex flex-col items-center gap-2"
+            >
+              <Meh className="w-6 h-6" />
+              <span className="text-xs font-semibold">Hard</span>
+              <span className="text-xs opacity-75">1 day</span>
+            </button>
+
+            <button
+              onClick={() => handleSRSRating(4)}
+              className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-2 border-blue-300 dark:border-blue-700 px-4 py-3 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors flex flex-col items-center gap-2"
+            >
+              <Smile className="w-6 h-6" />
+              <span className="text-xs font-semibold">Good</span>
+              <span className="text-xs opacity-75">3 days</span>
+            </button>
+
+            <button
+              onClick={() => handleSRSRating(5)}
+              className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-2 border-green-300 dark:border-green-700 px-4 py-3 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors flex flex-col items-center gap-2"
+            >
+              <Zap className="w-6 h-6" />
+              <span className="text-xs font-semibold">Easy</span>
+              <span className="text-xs opacity-75">6+ days</span>
+            </button>
+          </div>
+
+          <p className="text-center text-xs text-gray-500 dark:text-gray-500 mt-3">
+            Your rating helps optimize when you'll see this card again
+          </p>
         </div>
       )}
 
