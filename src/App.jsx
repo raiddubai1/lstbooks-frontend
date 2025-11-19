@@ -7,6 +7,8 @@ import YearDetail from './pages/YearDetail';
 import Progress from './pages/Progress';
 import Analytics from './pages/Analytics';
 import Notes from './pages/Notes';
+import Bookmarks from './pages/Bookmarks';
+import Reminders from './pages/Reminders';
 import Subjects from './pages/Subjects';
 import SubjectDetail from './pages/SubjectDetail';
 import ClinicalSkills from './pages/ClinicalSkills';
@@ -60,6 +62,8 @@ function App() {
             <Route path="progress" element={<Progress />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="notes" element={<Notes />} />
+            <Route path="bookmarks" element={<Bookmarks />} />
+            <Route path="reminders" element={<Reminders />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
