@@ -11,6 +11,8 @@ import Bookmarks from './pages/Bookmarks';
 import Reminders from './pages/Reminders';
 import Discussions from './pages/Discussions';
 import DiscussionDetail from './pages/DiscussionDetail';
+import StudyGroups from './pages/StudyGroups';
+import StudyGroupDetail from './pages/StudyGroupDetail';
 import Subjects from './pages/Subjects';
 import SubjectDetail from './pages/SubjectDetail';
 import ClinicalSkills from './pages/ClinicalSkills';
@@ -68,6 +70,8 @@ function App() {
             <Route path="reminders" element={<Reminders />} />
             <Route path="discussions" element={<Discussions />} />
             <Route path="discussions/:id" element={<DiscussionDetail />} />
+            <Route path="study-groups" element={<StudyGroups />} />
+            <Route path="study-groups/:id" element={<StudyGroupDetail />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
