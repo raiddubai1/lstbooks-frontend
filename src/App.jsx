@@ -15,6 +15,8 @@ import StudyGroups from './pages/StudyGroups';
 import StudyGroupDetail from './pages/StudyGroupDetail';
 import PeerReviews from './pages/PeerReviews';
 import PeerReviewDetail from './pages/PeerReviewDetail';
+import SharedResources from './pages/SharedResources';
+import SharedResourceDetail from './pages/SharedResourceDetail';
 import Subjects from './pages/Subjects';
 import SubjectDetail from './pages/SubjectDetail';
 import ClinicalSkills from './pages/ClinicalSkills';
@@ -76,6 +78,8 @@ function App() {
             <Route path="study-groups/:id" element={<StudyGroupDetail />} />
             <Route path="peer-reviews" element={<PeerReviews />} />
             <Route path="peer-reviews/:id" element={<PeerReviewDetail />} />
+            <Route path="shared-resources" element={<SharedResources />} />
+            <Route path="shared-resources/:id" element={<SharedResourceDetail />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />

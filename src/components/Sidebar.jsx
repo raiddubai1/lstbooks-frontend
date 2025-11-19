@@ -19,7 +19,8 @@ import {
   Bookmark,
   MessageSquare,
   UsersRound,
-  FileCheck
+  FileCheck,
+  Share2
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -35,6 +36,7 @@ const studentMenuItems = [
   { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
   { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
+  { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
@@ -56,6 +58,7 @@ const teacherMenuItems = [
   { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
   { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
+  { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -77,6 +80,7 @@ const adminMenuItems = [
   { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
   { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
+  { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: Users, label: 'User Management', path: '/admin/users' },
   { icon: BookOpen, label: 'Content Management', path: '/subjects' },
