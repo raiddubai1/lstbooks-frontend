@@ -41,15 +41,25 @@ const AIStudyAssistant = () => {
 
   const createNewSession = async () => {
     try {
+      console.log('Creating new session...');
+      console.log('API Base URL:', import.meta.env.VITE_API_URL);
+      console.log('Token:', localStorage.getItem('token') ? 'Present' : 'Missing');
+
       const response = await api.post('/ai-chat/sessions', {
         assistantType: 'study-assistant',
         title: 'New Chat'
       });
+
+      console.log('Session created:', response.data);
       setSessions([response.data, ...sessions]);
       setCurrentSession(response.data);
     } catch (error) {
       console.error('Error creating session:', error);
-      alert('Failed to create new chat. Please try again.');
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message;
+      alert(`Failed to create new chat: ${errorMessage}`);
     }
   };
 
