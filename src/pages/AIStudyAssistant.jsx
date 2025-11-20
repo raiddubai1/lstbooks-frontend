@@ -151,7 +151,7 @@ const AIStudyAssistant = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+    <div className="flex flex-col md:flex-row h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -163,10 +163,10 @@ const AIStudyAssistant = () => {
       {/* Sidebar - Chat Sessions */}
       <div className={`
         fixed md:relative top-0 bottom-0 left-0 z-50
-        w-80 md:w-80 bg-white dark:bg-gray-800
+        w-full md:w-80 bg-white dark:bg-gray-800
         border-r border-gray-200 dark:border-gray-700
         flex flex-col
-        max-h-screen md:h-full
+        h-full
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
@@ -449,10 +449,11 @@ const ResourceLink = ({ title, url }) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm font-medium"
+        className="inline-flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-xs md:text-sm font-medium"
       >
         {getIcon()}
-        <span>{title}</span>
+        <span className="truncate max-w-[180px] md:max-w-none">{title}</span>
+        <ExternalLink className="w-3 h-3 flex-shrink-0" />
       </a>
     );
   }
@@ -460,10 +461,10 @@ const ResourceLink = ({ title, url }) => {
   return (
     <Link
       to={url}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm font-medium"
+      className="inline-flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-xs md:text-sm font-medium"
     >
       {getIcon()}
-      <span>{title}</span>
+      <span className="truncate max-w-[180px] md:max-w-none">{title}</span>
     </Link>
   );
 };
@@ -473,7 +474,7 @@ const MessageContent = ({ content, isUser }) => {
   const resources = parseResourceLinks(content);
 
   if (resources.length === 0) {
-    return <p className="whitespace-pre-wrap break-words text-base leading-relaxed">{content}</p>;
+    return <p className="whitespace-pre-wrap break-words text-sm md:text-base leading-relaxed overflow-wrap-anywhere">{content}</p>;
   }
 
   // Split content by resource links
@@ -497,7 +498,7 @@ const MessageContent = ({ content, isUser }) => {
     <div className="space-y-2">
       {parts.map((part, index) => {
         if (part.type === 'text') {
-          return <p key={index} className="whitespace-pre-wrap break-words text-base leading-relaxed">{part.content}</p>;
+          return <p key={index} className="whitespace-pre-wrap break-words text-sm md:text-base leading-relaxed overflow-wrap-anywhere">{part.content}</p>;
         }
         return <ResourceLink key={index} title={part.title} url={part.url} />;
       })}
@@ -510,16 +511,16 @@ const MessageBubble = ({ message }) => {
   const isTyping = message.isTyping;
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className="w-full px-2 md:px-0 md:max-w-4xl md:mx-auto">
+      <div className={`flex gap-2 md:gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
         {!isUser && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-white" />
+          <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+            <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-white" />
           </div>
         )}
-        <div className={`flex-1 ${isUser ? 'flex justify-end' : ''}`}>
+        <div className={`flex-1 min-w-0 ${isUser ? 'flex justify-end' : ''}`}>
           <div
-            className={`inline-block px-4 py-3 rounded-2xl ${
+            className={`inline-block px-3 md:px-4 py-2.5 md:py-3 rounded-2xl max-w-[85%] md:max-w-[75%] ${
               isUser
                 ? 'bg-blue-600 text-white rounded-br-sm'
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-sm'
@@ -530,7 +531,7 @@ const MessageBubble = ({ message }) => {
             ) : (
               <>
                 <MessageContent content={message.content} isUser={isUser} />
-                <p className={`text-xs mt-2 ${isUser ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
+                <p className={`text-xs mt-1.5 md:mt-2 ${isUser ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
                   {new Date(message.timestamp).toLocaleTimeString()}
                 </p>
               </>
@@ -538,7 +539,7 @@ const MessageBubble = ({ message }) => {
           </div>
         </div>
         {isUser && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-white font-semibold text-sm">
+          <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-white font-semibold text-xs md:text-sm">
             U
           </div>
         )}
