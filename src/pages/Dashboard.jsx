@@ -8,6 +8,8 @@ import Loading from '../components/Loading';
 import { TrendingUp, Brain, Clock, Award, BookOpen, Target } from 'lucide-react';
 import TeacherDashboard from './TeacherDashboard';
 import AdminDashboard from './AdminDashboard';
+import PerformanceWidget from '../components/PerformanceWidget';
+import StudyGoals from '../components/StudyGoals';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -125,8 +127,15 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Recent Activity */}
+      {/* AI Performance Widget */}
+      <div className="mb-8">
+        <PerformanceWidget />
+      </div>
+
+      {/* Study Goals & Subject Progress */}
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
+        <StudyGoals />
+
         <div className="card">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-5 h-5 text-primary-600 dark:text-primary-400" />
@@ -154,26 +163,27 @@ const Dashboard = () => {
             <p className="text-gray-500 dark:text-gray-400 text-center py-8">No progress yet. Start learning!</p>
           )}
         </div>
+      </div>
 
-        <div className="card">
-          <div className="flex items-center gap-2 mb-4">
-            <BookOpen className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-            <h2 className="text-xl font-bold dark:text-white">Quick Actions</h2>
-          </div>
-          <div className="space-y-3">
-            <Link to="/subjects" className="block p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-              <h3 className="font-semibold mb-1 dark:text-white">Browse Subjects</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Explore study materials</p>
-            </Link>
-            <Link to="/quizzes" className="block p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-              <h3 className="font-semibold mb-1 dark:text-white">Take a Quiz</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Test your knowledge</p>
-            </Link>
-            <Link to="/flashcards" className="block p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-              <h3 className="font-semibold mb-1 dark:text-white">Review Flashcards</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Reinforce learning</p>
-            </Link>
-          </div>
+      {/* Quick Actions */}
+      <div className="card mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <BookOpen className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+          <h2 className="text-xl font-bold dark:text-white">Quick Actions</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          <Link to="/subjects" className="block p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <h3 className="font-semibold mb-1 dark:text-white">Browse Subjects</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Explore study materials</p>
+          </Link>
+          <Link to="/quizzes" className="block p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <h3 className="font-semibold mb-1 dark:text-white">Take a Quiz</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Test your knowledge</p>
+          </Link>
+          <Link to="/flashcards" className="block p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <h3 className="font-semibold mb-1 dark:text-white">Review Flashcards</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Reinforce learning</p>
+          </Link>
         </div>
       </div>
 

@@ -24,7 +24,8 @@ import {
   Share2,
   Sparkles,
   Trophy,
-  Award
+  Award,
+  HelpCircle
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -52,6 +53,7 @@ const studentMenuItems = [
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
+  { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
 
   // Progress & Analytics
   { icon: TrendingUp, label: 'Progress', path: '/progress' },
@@ -97,6 +99,7 @@ const teacherMenuItems = [
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
+  { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
 
   // Progress & Analytics
   { icon: TrendingUp, label: 'Progress', path: '/progress' },
@@ -148,6 +151,7 @@ const adminMenuItems = [
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
+  { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
 
   // Progress & Analytics
   { icon: TrendingUp, label: 'Progress', path: '/progress' },

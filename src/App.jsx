@@ -12,6 +12,7 @@ import YearDetail from './pages/YearDetail';
 import Progress from './pages/Progress';
 import Analytics from './pages/Analytics';
 import PerformanceAnalytics from './pages/PerformanceAnalytics';
+import AIGuide from './pages/AIGuide';
 import Notes from './pages/Notes';
 import Bookmarks from './pages/Bookmarks';
 import Reminders from './pages/Reminders';
@@ -96,6 +97,7 @@ function App() {
             <Route path="progress" element={<Progress />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="performance" element={<PerformanceAnalytics />} />
+            <Route path="ai-guide" element={<AIGuide />} />
             <Route path="notes" element={<Notes />} />
             <Route path="bookmarks" element={<Bookmarks />} />
             <Route path="reminders" element={<Reminders />} />
