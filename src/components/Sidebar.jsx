@@ -46,6 +46,7 @@ const studentMenuItems = [
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
@@ -92,6 +93,7 @@ const teacherMenuItems = [
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
@@ -144,6 +146,7 @@ const adminMenuItems = [
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
