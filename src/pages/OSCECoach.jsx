@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Send, Plus, Trash2, Pin, Stethoscope, Clock, CheckCircle } from 'lucide-react';
 
 const OSCECoach = () => {
@@ -25,9 +25,9 @@ const OSCECoach = () => {
   const fetchSessions = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/ai-chat/sessions?assistantType=osce-coach`);
+      const response = await api.get('/ai-chat/sessions?assistantType=osce-coach');
       setSessions(response.data);
-      
+
       if (response.data.length > 0) {
         setCurrentSession(response.data[0]);
       }
@@ -40,7 +40,7 @@ const OSCECoach = () => {
 
   const createNewSession = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/ai-chat/sessions`, {
+      const response = await api.post('/ai-chat/sessions', {
         assistantType: 'osce-coach',
         title: 'New OSCE Practice'
       });
@@ -48,6 +48,7 @@ const OSCECoach = () => {
       setCurrentSession(response.data);
     } catch (error) {
       console.error('Error creating session:', error);
+      alert('Failed to create new practice session. Please try again.');
     }
   };
 
@@ -55,7 +56,7 @@ const OSCECoach = () => {
     if (!confirm('Are you sure you want to delete this practice session?')) return;
 
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/ai-chat/sessions/${sessionId}`);
+      await api.delete(`/ai-chat/sessions/${sessionId}`);
       setSessions(sessions.filter(s => s._id !== sessionId));
       if (currentSession?._id === sessionId) {
         setCurrentSession(sessions[0] || null);
@@ -68,10 +69,10 @@ const OSCECoach = () => {
   const togglePin = async (sessionId) => {
     try {
       const session = sessions.find(s => s._id === sessionId);
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/ai-chat/sessions/${sessionId}`, {
+      const response = await api.put(`/ai-chat/sessions/${sessionId}`, {
         isPinned: !session.isPinned
       });
-      
+
       setSessions(sessions.map(s => s._id === sessionId ? response.data : s));
       if (currentSession?._id === sessionId) {
         setCurrentSession(response.data);
@@ -90,11 +91,11 @@ const OSCECoach = () => {
     setSendingMessage(true);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ai-chat/sessions/${currentSession._id}/message`,
+      const response = await api.post(
+        `/ai-chat/sessions/${currentSession._id}/message`,
         { content: userMessage }
       );
-      
+
       setCurrentSession(response.data);
       setSessions(sessions.map(s => s._id === response.data._id ? response.data : s));
     } catch (error) {

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Send, Plus, Trash2, Pin, Edit2, MessageSquare, Sparkles } from 'lucide-react';
 
 const AIStudyAssistant = () => {
@@ -25,9 +25,9 @@ const AIStudyAssistant = () => {
   const fetchSessions = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/ai-chat/sessions?assistantType=study-assistant`);
+      const response = await api.get('/ai-chat/sessions?assistantType=study-assistant');
       setSessions(response.data);
-      
+
       // Auto-select first session or create new one
       if (response.data.length > 0) {
         setCurrentSession(response.data[0]);
@@ -41,7 +41,7 @@ const AIStudyAssistant = () => {
 
   const createNewSession = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/ai-chat/sessions`, {
+      const response = await api.post('/ai-chat/sessions', {
         assistantType: 'study-assistant',
         title: 'New Chat'
       });
@@ -49,6 +49,7 @@ const AIStudyAssistant = () => {
       setCurrentSession(response.data);
     } catch (error) {
       console.error('Error creating session:', error);
+      alert('Failed to create new chat. Please try again.');
     }
   };
 
@@ -56,7 +57,7 @@ const AIStudyAssistant = () => {
     if (!confirm('Are you sure you want to delete this chat?')) return;
 
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/ai-chat/sessions/${sessionId}`);
+      await api.delete(`/ai-chat/sessions/${sessionId}`);
       setSessions(sessions.filter(s => s._id !== sessionId));
       if (currentSession?._id === sessionId) {
         setCurrentSession(sessions[0] || null);
@@ -69,10 +70,10 @@ const AIStudyAssistant = () => {
   const togglePin = async (sessionId) => {
     try {
       const session = sessions.find(s => s._id === sessionId);
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/ai-chat/sessions/${sessionId}`, {
+      const response = await api.put(`/ai-chat/sessions/${sessionId}`, {
         isPinned: !session.isPinned
       });
-      
+
       setSessions(sessions.map(s => s._id === sessionId ? response.data : s));
       if (currentSession?._id === sessionId) {
         setCurrentSession(response.data);
@@ -91,11 +92,11 @@ const AIStudyAssistant = () => {
     setSendingMessage(true);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ai-chat/sessions/${currentSession._id}/message`,
+      const response = await api.post(
+        `/ai-chat/sessions/${currentSession._id}/message`,
         { content: userMessage }
       );
-      
+
       setCurrentSession(response.data);
       setSessions(sessions.map(s => s._id === response.data._id ? response.data : s));
     } catch (error) {
