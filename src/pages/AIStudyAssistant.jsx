@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
-import { Send, Plus, Trash2, Pin, Edit2, MessageSquare, Sparkles, Menu, X } from 'lucide-react';
+import { Send, Plus, Trash2, Pin, Edit2, MessageSquare, Sparkles, Menu, X, ExternalLink, BookOpen, Video, FileText, Stethoscope, FlaskConical, ClipboardList } from 'lucide-react';
 
 const AIStudyAssistant = () => {
   const [sessions, setSessions] = useState([]);
@@ -379,6 +380,96 @@ const TypingIndicator = () => (
   </div>
 );
 
+// Helper function to parse resource links from AI response
+const parseResourceLinks = (text) => {
+  const resources = [];
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    const [fullMatch, title, url] = match;
+    resources.push({ title, url, fullMatch });
+  }
+
+  return resources;
+};
+
+// Resource link component
+const ResourceLink = ({ title, url }) => {
+  const getIcon = () => {
+    if (url.includes('/quizzes/')) return <BookOpen className="w-4 h-4" />;
+    if (url.includes('/videos/') || url.includes('youtube.com') || url.includes('youtu.be')) return <Video className="w-4 h-4" />;
+    if (url.includes('/flashcards')) return <FileText className="w-4 h-4" />;
+    if (url.includes('/skills/')) return <Stethoscope className="w-4 h-4" />;
+    if (url.includes('/labs/')) return <FlaskConical className="w-4 h-4" />;
+    if (url.includes('/osce/')) return <ClipboardList className="w-4 h-4" />;
+    return <ExternalLink className="w-4 h-4" />;
+  };
+
+  const isExternal = url.startsWith('http');
+
+  if (isExternal) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm font-medium"
+      >
+        {getIcon()}
+        <span>{title}</span>
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      to={url}
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm font-medium"
+    >
+      {getIcon()}
+      <span>{title}</span>
+    </Link>
+  );
+};
+
+// Enhanced message content renderer
+const MessageContent = ({ content, isUser }) => {
+  const resources = parseResourceLinks(content);
+
+  if (resources.length === 0) {
+    return <p className="whitespace-pre-wrap break-words text-base leading-relaxed">{content}</p>;
+  }
+
+  // Split content by resource links
+  let remainingText = content;
+  const parts = [];
+
+  resources.forEach((resource, index) => {
+    const splitIndex = remainingText.indexOf(resource.fullMatch);
+    if (splitIndex > 0) {
+      parts.push({ type: 'text', content: remainingText.substring(0, splitIndex) });
+    }
+    parts.push({ type: 'resource', ...resource });
+    remainingText = remainingText.substring(splitIndex + resource.fullMatch.length);
+  });
+
+  if (remainingText) {
+    parts.push({ type: 'text', content: remainingText });
+  }
+
+  return (
+    <div className="space-y-2">
+      {parts.map((part, index) => {
+        if (part.type === 'text') {
+          return <p key={index} className="whitespace-pre-wrap break-words text-base leading-relaxed">{part.content}</p>;
+        }
+        return <ResourceLink key={index} title={part.title} url={part.url} />;
+      })}
+    </div>
+  );
+};
+
 const MessageBubble = ({ message }) => {
   const isUser = message.role === 'user';
   const isTyping = message.isTyping;
@@ -403,7 +494,7 @@ const MessageBubble = ({ message }) => {
               <TypingIndicator />
             ) : (
               <>
-                <p className="whitespace-pre-wrap break-words text-base leading-relaxed">{message.content}</p>
+                <MessageContent content={message.content} isUser={isUser} />
                 <p className={`text-xs mt-2 ${isUser ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
                   {new Date(message.timestamp).toLocaleTimeString()}
                 </p>
