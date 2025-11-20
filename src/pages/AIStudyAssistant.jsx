@@ -401,7 +401,6 @@ const AIStudyAssistant = () => {
               </div>
             </div>
           </>
-          </div>
         )}
       </div>
     </div>

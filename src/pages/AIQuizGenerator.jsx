@@ -148,7 +148,9 @@ const AIQuizGenerator = () => {
                 className="input w-full"
               />
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-
+                Be specific for better results
+              </p>
+            </div>
 
             {/* Year */}
             <div>
@@ -355,21 +357,3 @@ const AIQuizGenerator = () => {
 };
 
 export default AIQuizGenerator;
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Subject *
-              </label>
-              <select
-                value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                className="input w-full"
-              >
-                <option value="">Select Subject</option>
-                {subjects.map((subject) => (
-                  <option key={subject._id} value={subject._id}>
-                    {subject.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-

@@ -148,6 +148,11 @@ const TreatmentProtocols = () => {
             onChange={(e) => setShowVerified(e.target.checked)}
             className="w-4 h-4 text-blue-600 rounded"
           />
+          <label htmlFor="verified" className="text-sm text-gray-700 dark:text-gray-300">
+            Show verified protocols only
+          </label>
+        </div>
+      </div>
 
       {/* Protocols List */}
       {loading ? (
