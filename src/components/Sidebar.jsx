@@ -109,6 +109,7 @@ const teacherMenuItems = [
 
   // AI Assistants
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
+  { icon: Brain, label: 'AI Quiz Generator', path: '/ai-quiz-generator' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
   { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
@@ -168,6 +169,7 @@ const adminMenuItems = [
 
   // AI Assistants
   { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
+  { icon: Brain, label: 'AI Quiz Generator', path: '/ai-quiz-generator' },
   { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
   { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
   { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },

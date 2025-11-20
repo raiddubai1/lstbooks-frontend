@@ -64,6 +64,7 @@ import StudentDetail from './pages/StudentDetail';
 import ResourceCenter from './pages/ResourceCenter';
 import CoursePlanner from './pages/CoursePlanner';
 import TreatmentProtocols from './pages/TreatmentProtocols';
+import AIQuizGenerator from './pages/AIQuizGenerator';
 
 function App() {
   useEffect(() => {
@@ -135,6 +136,7 @@ function App() {
             <Route path="resource-center" element={<ResourceCenter />} />
             <Route path="course-planner" element={<CoursePlanner />} />
             <Route path="treatment-protocols" element={<TreatmentProtocols />} />
+            <Route path="ai-quiz-generator" element={<AIQuizGenerator />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
