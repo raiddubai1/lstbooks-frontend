@@ -51,6 +51,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
 import About from './pages/About';
+import AdminAnalytics from './pages/AdminAnalytics';
+import AdminContent from './pages/AdminContent';
+import AdminUsers from './pages/AdminUsers';
 
 function App() {
   useEffect(() => {
@@ -109,6 +112,9 @@ function App() {
             <Route path="leaderboard" element={<Leaderboard />} />
             <Route path="achievements" element={<Achievements />} />
             <Route path="challenges" element={<Challenges />} />
+            <Route path="admin/analytics" element={<AdminAnalytics />} />
+            <Route path="admin/content" element={<AdminContent />} />
+            <Route path="admin/users" element={<AdminUsers />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />

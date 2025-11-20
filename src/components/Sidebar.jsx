@@ -107,8 +107,10 @@ const adminMenuItems = [
   { icon: Award, label: 'Achievements', path: '/achievements' },
   { icon: Target, label: 'Challenges', path: '/challenges' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
+  { icon: BarChart3, label: 'Admin Analytics', path: '/admin/analytics' },
+  { icon: FileCheck, label: 'Content Approval', path: '/admin/content' },
   { icon: Users, label: 'User Management', path: '/admin/users' },
-  { icon: BookOpen, label: 'Content Management', path: '/subjects' },
+  { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Shield, label: 'Settings', path: '/settings' },
   { icon: Info, label: 'About', path: '/about' },
 ];
