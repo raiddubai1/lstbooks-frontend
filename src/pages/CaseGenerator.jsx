@@ -106,10 +106,55 @@ const CaseGenerator = () => {
   };
 
   const quickPrompts = [
-    "Generate a case about periodontal disease",
-    "Create a case involving dental trauma",
-    "Generate an endodontic case",
-    "Create a case about oral pathology"
+    // Periodontics
+    "Generate a case about generalized chronic periodontitis with systemic factors",
+    "Create a case involving aggressive periodontitis in a young patient",
+    "Generate a periodontal abscess case with emergency presentation",
+
+    // Endodontics
+    "Create a case about irreversible pulpitis requiring root canal treatment",
+    "Generate an endodontic case with periapical abscess and swelling",
+    "Create a case involving a cracked tooth with pulpal involvement",
+
+    // Prosthodontics
+    "Generate a case about complete denture fabrication for an edentulous patient",
+    "Create a case involving fixed partial denture (bridge) planning",
+    "Generate an implant-supported crown case with bone grafting needs",
+
+    // Oral Surgery
+    "Create a case involving impacted wisdom tooth extraction",
+    "Generate a case about dental trauma with tooth avulsion",
+    "Create a case involving jaw fracture from trauma",
+
+    // Restorative Dentistry
+    "Generate a case about extensive caries requiring multiple restorations",
+    "Create a case involving anterior esthetic restoration",
+    "Generate a case about tooth wear and erosion management",
+
+    // Orthodontics
+    "Create a case involving Class II malocclusion requiring orthodontic treatment",
+    "Generate a case about crowding and extraction decisions",
+    "Create a case involving crossbite correction in a growing patient",
+
+    // Pediatric Dentistry
+    "Generate a case about early childhood caries in a 4-year-old",
+    "Create a case involving pulp therapy for a primary molar",
+    "Generate a case about space management after premature tooth loss",
+
+    // Oral Pathology
+    "Create a case involving oral cancer detection and biopsy",
+    "Generate a case about oral lichen planus diagnosis",
+    "Create a case involving salivary gland pathology",
+
+    // Emergency Cases
+    "Generate an emergency case with severe toothache and facial swelling",
+    "Create a case involving dental trauma with multiple fractured teeth",
+    "Generate a case about Ludwig's angina requiring immediate intervention",
+
+    // Complex Cases
+    "Create a medically compromised patient case (diabetes, hypertension, anticoagulants)",
+    "Generate a case involving full mouth rehabilitation planning",
+    "Create a case about TMJ disorder diagnosis and management"
   ];
 
   if (loading) {
