@@ -15,6 +15,7 @@ import {
   BarChart3,
   GraduationCap,
   TrendingUp,
+  Target,
   FileText,
   Bookmark,
   MessageSquare,
@@ -23,8 +24,7 @@ import {
   Share2,
   Sparkles,
   Trophy,
-  Award,
-  Target
+  Award
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -56,6 +56,7 @@ const studentMenuItems = [
   // Progress & Analytics
   { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: Brain, label: 'AI Performance', path: '/performance' },
 
   // Gamification
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
@@ -100,6 +101,7 @@ const teacherMenuItems = [
   // Progress & Analytics
   { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: Brain, label: 'AI Performance', path: '/performance' },
 
   // Gamification
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
@@ -150,6 +152,7 @@ const adminMenuItems = [
   // Progress & Analytics
   { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: Brain, label: 'AI Performance', path: '/performance' },
 
   // Gamification
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
