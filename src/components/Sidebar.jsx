@@ -25,7 +25,8 @@ import {
   Sparkles,
   Trophy,
   Award,
-  HelpCircle
+  HelpCircle,
+  Image
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -48,6 +49,7 @@ const studentMenuItems = [
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Past Papers', path: '/past-papers' },
+  { icon: Image, label: 'Photo Library', path: '/photos' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
@@ -96,6 +98,7 @@ const teacherMenuItems = [
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Past Papers', path: '/past-papers' },
+  { icon: Image, label: 'Photo Library', path: '/photos' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
@@ -150,6 +153,7 @@ const adminMenuItems = [
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Past Papers', path: '/past-papers' },
+  { icon: Image, label: 'Photo Library', path: '/photos' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
