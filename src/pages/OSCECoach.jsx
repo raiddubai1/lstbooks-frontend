@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
-import { Send, Plus, Trash2, Pin, Stethoscope, Clock, CheckCircle } from 'lucide-react';
+import { Send, Plus, Trash2, Pin, Stethoscope, Clock, CheckCircle, Menu, X, MessageSquare } from 'lucide-react';
 
 const OSCECoach = () => {
   const [sessions, setSessions] = useState([]);
