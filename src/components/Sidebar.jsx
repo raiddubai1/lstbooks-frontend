@@ -31,87 +31,139 @@ import { getUserRole } from '../utils/auth';
 
 // Menu items for students
 const studentMenuItems = [
+  // Main Navigation
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: TrendingUp, label: 'Progress', path: '/progress' },
-  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-  { icon: FileText, label: 'Notes', path: '/notes' },
-  { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
-  { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
-  { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
-  { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
-  { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
-  { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
-  { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
-  { icon: FileText, label: 'Case Generator', path: '/case-generator' },
-  { icon: Trophy, label: 'Gamification', path: '/gamification' },
-  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
-  { icon: Award, label: 'Achievements', path: '/achievements' },
-  { icon: Target, label: 'Challenges', path: '/challenges' },
+
+  // Learning Content
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
   { icon: FlaskConical, label: 'Labs', path: '/labs' },
   { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+
+  // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: FileText, label: 'Notes', path: '/notes' },
+  { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+
+  // AI Assistants
+  { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
+  { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
+  { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
+
+  // Progress & Analytics
+  { icon: TrendingUp, label: 'Progress', path: '/progress' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+
+  // Gamification
+  { icon: Trophy, label: 'Gamification', path: '/gamification' },
+  { icon: Award, label: 'Achievements', path: '/achievements' },
+  { icon: Target, label: 'Challenges', path: '/challenges' },
+  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
+
+  // Social Features
+  { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
+  { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
+  { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
+  { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
+
+  // About
   { icon: Info, label: 'About', path: '/about' },
 ];
 
 // Menu items for teachers
 const teacherMenuItems = [
+  // Main Navigation
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: TrendingUp, label: 'Progress', path: '/progress' },
-  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+
+  // Learning Content
+  { icon: GraduationCap, label: 'Years', path: '/years' },
+  { icon: BookOpen, label: 'Subjects', path: '/subjects' },
+  { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
+  { icon: FlaskConical, label: 'Labs', path: '/labs' },
+  { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+
+  // Study Tools
+  { icon: Brain, label: 'Quizzes', path: '/quizzes' },
+  { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+
+  // AI Assistants
+  { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
+  { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
+  { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
+
+  // Progress & Analytics
+  { icon: TrendingUp, label: 'Progress', path: '/progress' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+
+  // Gamification
+  { icon: Trophy, label: 'Gamification', path: '/gamification' },
+  { icon: Award, label: 'Achievements', path: '/achievements' },
+  { icon: Target, label: 'Challenges', path: '/challenges' },
+  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
+
+  // Social Features
   { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
   { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
   { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
-  { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
-  { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
-  { icon: FileText, label: 'Case Generator', path: '/case-generator' },
-  { icon: Trophy, label: 'Gamification', path: '/gamification' },
-  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
-  { icon: Award, label: 'Achievements', path: '/achievements' },
-  { icon: Target, label: 'Challenges', path: '/challenges' },
-  { icon: GraduationCap, label: 'Years', path: '/years' },
-  { icon: BookOpen, label: 'Subjects', path: '/subjects' },
-  { icon: Brain, label: 'Quizzes', path: '/quizzes' },
-  { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
-  { icon: FlaskConical, label: 'Labs', path: '/labs' },
-  { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
-  { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
+
+  // About
   { icon: Info, label: 'About', path: '/about' },
 ];
 
 // Menu items for admins
 const adminMenuItems = [
+  // Main Navigation
   { icon: Home, label: 'Home', path: '/' },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: TrendingUp, label: 'Progress', path: '/progress' },
-  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+
+  // Admin Management
+  { icon: Users, label: 'User Management', path: '/admin/users' },
+  { icon: FileCheck, label: 'Content Approval', path: '/admin/content' },
+  { icon: BarChart3, label: 'Admin Analytics', path: '/admin/analytics' },
+  { icon: Shield, label: 'Settings', path: '/settings' },
+
+  // Learning Content
+  { icon: GraduationCap, label: 'Years', path: '/years' },
+  { icon: BookOpen, label: 'Subjects', path: '/subjects' },
+  { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
+  { icon: FlaskConical, label: 'Labs', path: '/labs' },
+  { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+
+  // Study Tools
+  { icon: Brain, label: 'Quizzes', path: '/quizzes' },
+  { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+
+  // AI Assistants
+  { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
+  { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
+  { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
+
+  // Progress & Analytics
+  { icon: TrendingUp, label: 'Progress', path: '/progress' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+
+  // Gamification
+  { icon: Trophy, label: 'Gamification', path: '/gamification' },
+  { icon: Award, label: 'Achievements', path: '/achievements' },
+  { icon: Target, label: 'Challenges', path: '/challenges' },
+  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
+
+  // Social Features
   { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
   { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
   { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
   { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
-  { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
-  { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
-  { icon: FileText, label: 'Case Generator', path: '/case-generator' },
-  { icon: Trophy, label: 'Gamification', path: '/gamification' },
-  { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
-  { icon: Award, label: 'Achievements', path: '/achievements' },
-  { icon: Target, label: 'Challenges', path: '/challenges' },
-  { icon: GraduationCap, label: 'Years', path: '/years' },
-  { icon: BarChart3, label: 'Admin Analytics', path: '/admin/analytics' },
-  { icon: FileCheck, label: 'Content Approval', path: '/admin/content' },
-  { icon: Users, label: 'User Management', path: '/admin/users' },
-  { icon: BookOpen, label: 'Subjects', path: '/subjects' },
-  { icon: Shield, label: 'Settings', path: '/settings' },
+
+  // About
   { icon: Info, label: 'About', path: '/about' },
 ];
 
