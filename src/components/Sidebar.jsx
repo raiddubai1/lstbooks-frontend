@@ -51,6 +51,7 @@ const studentMenuItems = [
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: TrendingUp, label: 'Spaced Repetition', path: '/spaced-repetition' },
   { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Past Papers', path: '/past-papers' },
   { icon: Image, label: 'Photo Library', path: '/photos' },
@@ -101,6 +102,7 @@ const teacherMenuItems = [
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: TrendingUp, label: 'Spaced Repetition', path: '/spaced-repetition' },
   { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Past Papers', path: '/past-papers' },
   { icon: Image, label: 'Photo Library', path: '/photos' },
@@ -161,6 +163,7 @@ const adminMenuItems = [
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
+  { icon: TrendingUp, label: 'Spaced Repetition', path: '/spaced-repetition' },
   { icon: BookOpen, label: 'Books', path: '/books' },
   { icon: FileText, label: 'Past Papers', path: '/past-papers' },
   { icon: Image, label: 'Photo Library', path: '/photos' },
@@ -175,7 +178,7 @@ const adminMenuItems = [
   { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
 
   // Progress & Analytics
-  { icon: TrendingUp, label: 'Progress', path: '/progress' },
+  { icon: BarChart3, label: 'Progress', path: '/progress' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   { icon: Brain, label: 'AI Performance', path: '/performance' },
 
