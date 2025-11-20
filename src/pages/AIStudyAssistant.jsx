@@ -151,7 +151,7 @@ const AIStudyAssistant = () => {
   }
 
   return (
-    <div className="fixed inset-0 md:static md:h-[calc(100vh-4rem)] flex flex-col md:flex-row bg-gray-50 dark:bg-gray-900 overflow-hidden z-[60]">
+    <div className="fixed top-0 left-0 right-0 bottom-16 md:static md:h-[calc(100vh-4rem)] flex flex-col md:flex-row bg-gray-50 dark:bg-gray-900 overflow-hidden z-30">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -326,7 +326,7 @@ const AIStudyAssistant = () => {
             </div>
 
             {/* Input Area - Mobile Optimized */}
-            <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 md:p-4 flex-shrink-0 mb-16 md:mb-0">
+            <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 md:p-4 flex-shrink-0">
               <div className="max-w-4xl mx-auto">
                 <form onSubmit={sendMessage} className="flex gap-2 items-center">
                   <div className="flex-1 relative">
