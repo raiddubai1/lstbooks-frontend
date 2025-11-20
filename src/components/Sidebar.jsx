@@ -400,14 +400,14 @@ const Sidebar = ({ isOpen, onClose }) => {
       >
         <div className="flex flex-col h-full">
           {/* Close button for mobile */}
-          <div className="lg:hidden flex justify-end p-4">
+          <div className="lg:hidden flex justify-end px-4 pt-4 pb-2">
             <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
               <X className="w-6 h-6 dark:text-gray-300" />
             </button>
           </div>
 
           {/* Menu items */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+          <nav className="flex-1 px-4 pb-6 space-y-1 overflow-y-auto">
             {menu.map((section, sectionIndex) => {
               if (section.type === 'pinned') {
                 // Render pinned items (always visible)
