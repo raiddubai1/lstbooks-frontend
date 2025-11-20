@@ -112,6 +112,7 @@ const teacherMenuItems = [
   { icon: TrendingUp, label: 'Progress', path: '/progress' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   { icon: Brain, label: 'AI Performance', path: '/performance' },
+  { icon: Users, label: 'Student Analytics', path: '/student-analytics' },
 
   // Gamification
   { icon: Trophy, label: 'Gamification', path: '/gamification' },

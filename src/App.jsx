@@ -59,6 +59,8 @@ import About from './pages/About';
 import AdminAnalytics from './pages/AdminAnalytics';
 import AdminContent from './pages/AdminContent';
 import AdminUsers from './pages/AdminUsers';
+import StudentAnalytics from './pages/StudentAnalytics';
+import StudentDetail from './pages/StudentDetail';
 
 function App() {
   useEffect(() => {
@@ -125,6 +127,8 @@ function App() {
             <Route path="admin/analytics" element={<AdminAnalytics />} />
             <Route path="admin/content" element={<AdminContent />} />
             <Route path="admin/users" element={<AdminUsers />} />
+            <Route path="student-analytics" element={<StudentAnalytics />} />
+            <Route path="student-analytics/:studentId" element={<StudentDetail />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
