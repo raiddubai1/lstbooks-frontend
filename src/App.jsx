@@ -48,6 +48,7 @@ import QuizResults from './pages/QuizResults';
 import Flashcards from './pages/Flashcards';
 import FlashcardStudy from './pages/FlashcardStudy';
 import Books from './pages/Books';
+import PastPapers from './pages/PastPapers';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 import Login from './pages/Login';
@@ -95,6 +96,7 @@ function App() {
             <Route path="flashcards" element={<Flashcards />} />
             <Route path="flashcards/study" element={<FlashcardStudy />} />
             <Route path="books" element={<Books />} />
+            <Route path="past-papers" element={<PastPapers />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="progress" element={<Progress />} />
             <Route path="analytics" element={<Analytics />} />

@@ -47,6 +47,7 @@ const studentMenuItems = [
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: BookOpen, label: 'Books', path: '/books' },
+  { icon: FileText, label: 'Past Papers', path: '/past-papers' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
@@ -94,6 +95,7 @@ const teacherMenuItems = [
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: BookOpen, label: 'Books', path: '/books' },
+  { icon: FileText, label: 'Past Papers', path: '/past-papers' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
@@ -147,6 +149,7 @@ const adminMenuItems = [
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
   { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
   { icon: BookOpen, label: 'Books', path: '/books' },
+  { icon: FileText, label: 'Past Papers', path: '/past-papers' },
   { icon: FileText, label: 'Notes', path: '/notes' },
   { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
 
