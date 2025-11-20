@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
-import { Send, Plus, Trash2, Pin, Edit2, MessageSquare, Sparkles, Menu, X, ExternalLink, BookOpen, Video, FileText, Stethoscope, FlaskConical, ClipboardList } from 'lucide-react';
+import { Send, Plus, Trash2, Pin, Edit2, MessageSquare, Sparkles, Menu, X, ExternalLink, BookOpen, Video, FileText, Stethoscope, FlaskConical, ClipboardList, ArrowLeft } from 'lucide-react';
 
 const AIStudyAssistant = () => {
   const [sessions, setSessions] = useState([]);
@@ -151,7 +151,7 @@ const AIStudyAssistant = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -162,15 +162,16 @@ const AIStudyAssistant = () => {
 
       {/* Sidebar - Chat Sessions */}
       <div className={`
-        fixed md:relative inset-y-0 left-0 z-50
+        fixed md:relative top-0 bottom-0 left-0 z-50
         w-80 md:w-80 bg-white dark:bg-gray-800
         border-r border-gray-200 dark:border-gray-700
         flex flex-col
+        max-h-screen md:h-full
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         {/* Header */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-blue-600" />
@@ -193,7 +194,7 @@ const AIStudyAssistant = () => {
         </div>
 
         {/* Sessions List */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto overscroll-contain">
           {sessions.length === 0 ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50" />
@@ -255,26 +256,48 @@ const AIStudyAssistant = () => {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {currentSession ? (
           <>
-            {/* Chat Header - Gemini Style */}
-            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center gap-3">
+            {/* Chat Header - Mobile Optimized */}
+            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-3 md:px-4 py-3 flex items-center gap-2 md:gap-3 flex-shrink-0">
+              {/* Back to Chats Button - Mobile */}
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg flex items-center gap-1 text-gray-700 dark:text-gray-300"
+                title="View all chats"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="text-sm font-medium">Chats</span>
+              </button>
+
+              {/* Menu Icon - Desktop */}
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="hidden md:block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                title="Toggle sidebar"
               >
                 <Menu className="w-5 h-5" />
               </button>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white truncate">
                   {currentSession.title}
                 </h3>
               </div>
+
+              {/* New Chat Button - Mobile */}
+              <button
+                onClick={createNewSession}
+                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-blue-600 flex-shrink-0"
+                title="New chat"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 overscroll-contain">
               {currentSession.messages.length === 0 ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center max-w-md">
@@ -302,10 +325,10 @@ const AIStudyAssistant = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area - Gemini Style */}
-            <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
+            {/* Input Area - Mobile Optimized */}
+            <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 flex-shrink-0">
               <div className="max-w-4xl mx-auto">
-                <form onSubmit={sendMessage} className="flex gap-3 items-end">
+                <form onSubmit={sendMessage} className="flex gap-2 md:gap-3 items-end">
                   <div className="flex-1 relative">
                     <input
                       type="text"
@@ -330,16 +353,29 @@ const AIStudyAssistant = () => {
         ) : (
           <>
             {/* Empty State Header */}
-            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center gap-3">
+            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-3 md:px-4 py-3 flex items-center gap-2 md:gap-3 flex-shrink-0">
+              {/* Back to Chats Button - Mobile */}
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg flex items-center gap-1 text-gray-700 dark:text-gray-300"
+                title="View all chats"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="text-sm font-medium">Chats</span>
+              </button>
+
+              {/* Menu Icon - Desktop */}
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="hidden md:block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                title="Toggle sidebar"
               >
                 <Menu className="w-5 h-5" />
               </button>
+
               <div className="flex-1 flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-blue-600" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <Sparkles className="w-5 md:w-6 h-5 md:h-6 text-blue-600" />
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">
                   AI Study Assistant
                 </h3>
               </div>
