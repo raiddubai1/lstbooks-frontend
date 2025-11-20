@@ -114,6 +114,7 @@ const teacherMenuItems = [
   { icon: Brain, label: 'AI Performance', path: '/performance' },
   { icon: Users, label: 'Student Analytics', path: '/student-analytics' },
   { icon: Upload, label: 'Resource Center', path: '/resource-center' },
+  { icon: Calendar, label: 'Course Planner', path: '/course-planner' },
 
   // Gamification
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
