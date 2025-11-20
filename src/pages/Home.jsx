@@ -36,19 +36,19 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-12 text-white mb-8">
+      <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-12 text-white mb-8">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Welcome to lstBooks
           </h1>
-          <p className="text-xl mb-8 text-primary-100">
+          <p className="text-xl mb-8 text-gray-300">
             Your comprehensive learning platform for dental education. Study smarter, not harder.
           </p>
           <div className="flex gap-4">
-            <Link to="/subjects" className="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors">
+            <Link to="/subjects" className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
               Browse Subjects
             </Link>
-            <Link to="/dashboard" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
+            <Link to="/dashboard" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-colors">
               View Dashboard
             </Link>
           </div>
