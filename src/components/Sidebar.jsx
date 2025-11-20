@@ -22,7 +22,9 @@ import {
   FileCheck,
   Share2,
   Sparkles,
-  Trophy
+  Trophy,
+  Award,
+  Target
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -44,6 +46,8 @@ const studentMenuItems = [
   { icon: FileText, label: 'Case Generator', path: '/case-generator' },
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
   { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
+  { icon: Award, label: 'Achievements', path: '/achievements' },
+  { icon: Target, label: 'Challenges', path: '/challenges' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
@@ -71,6 +75,8 @@ const teacherMenuItems = [
   { icon: FileText, label: 'Case Generator', path: '/case-generator' },
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
   { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
+  { icon: Award, label: 'Achievements', path: '/achievements' },
+  { icon: Target, label: 'Challenges', path: '/challenges' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: BookOpen, label: 'Subjects', path: '/subjects' },
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -98,6 +104,8 @@ const adminMenuItems = [
   { icon: FileText, label: 'Case Generator', path: '/case-generator' },
   { icon: Trophy, label: 'Gamification', path: '/gamification' },
   { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
+  { icon: Award, label: 'Achievements', path: '/achievements' },
+  { icon: Target, label: 'Challenges', path: '/challenges' },
   { icon: GraduationCap, label: 'Years', path: '/years' },
   { icon: Users, label: 'User Management', path: '/admin/users' },
   { icon: BookOpen, label: 'Content Management', path: '/subjects' },
