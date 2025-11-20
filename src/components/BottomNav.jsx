@@ -25,21 +25,21 @@ const BottomNav = ({ onMenuClick, className = '' }) => {
 
     const navItems = {
       student: [
-        { icon: Home, label: 'Home', path: '/dashboard', id: 'home' },
+        { icon: Home, label: 'Home', path: '/', id: 'home' },
         { icon: BookOpen, label: 'Learn', path: '/subjects', id: 'learn' },
         { icon: Sparkles, label: 'AI', path: '/ai-study-assistant', id: 'ai' },
         { icon: BarChart3, label: 'Progress', path: '/analytics', id: 'progress' },
         { icon: Menu, label: 'More', action: 'menu', id: 'more' },
       ],
       teacher: [
-        { icon: Home, label: 'Home', path: '/dashboard', id: 'home' },
+        { icon: Home, label: 'Home', path: '/', id: 'home' },
         { icon: Users, label: 'Students', path: '/student-analytics', id: 'students' },
         { icon: Upload, label: 'Upload', path: '/resource-center', id: 'upload' },
         { icon: BarChart3, label: 'Analytics', path: '/analytics', id: 'analytics' },
         { icon: Menu, label: 'More', action: 'menu', id: 'more' },
       ],
       admin: [
-        { icon: Home, label: 'Home', path: '/dashboard', id: 'home' },
+        { icon: Home, label: 'Home', path: '/', id: 'home' },
         { icon: Users, label: 'Users', path: '/admin/users', id: 'users' },
         { icon: CheckSquare, label: 'Approve', path: '/admin/content', id: 'approve' },
         { icon: Shield, label: 'Analytics', path: '/admin/analytics', id: 'analytics' },
