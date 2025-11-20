@@ -398,16 +398,17 @@ const Sidebar = ({ isOpen, onClose }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
-        <div className="flex flex-col h-full">
-          {/* Close button for mobile */}
-          <div className="lg:hidden flex justify-end px-4 pt-4 pb-2">
-            <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-              <X className="w-6 h-6 dark:text-gray-300" />
-            </button>
-          </div>
+        {/* Close button for mobile - floating outside */}
+        <button
+          onClick={onClose}
+          className="lg:hidden absolute -right-12 top-4 z-50 w-10 h-10 bg-white dark:bg-gray-800 rounded-r-lg shadow-lg border border-l-0 border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        >
+          <X className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+        </button>
 
+        <div className="flex flex-col h-full">
           {/* Menu items */}
-          <nav className="flex-1 px-4 pb-6 space-y-1 overflow-y-auto">
+          <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
             {menu.map((section, sectionIndex) => {
               if (section.type === 'pinned') {
                 // Render pinned items (always visible)
