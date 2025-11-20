@@ -102,6 +102,27 @@ const AIStudyAssistant = () => {
     setMessage('');
     setSendingMessage(true);
 
+    // Optimistic UI update - show user message immediately
+    const optimisticUserMessage = {
+      role: 'user',
+      content: userMessage,
+      timestamp: new Date().toISOString()
+    };
+
+    const optimisticAIMessage = {
+      role: 'assistant',
+      content: '...',
+      timestamp: new Date().toISOString(),
+      isTyping: true
+    };
+
+    const updatedSession = {
+      ...currentSession,
+      messages: [...currentSession.messages, optimisticUserMessage, optimisticAIMessage]
+    };
+
+    setCurrentSession(updatedSession);
+
     try {
       const response = await api.post(
         `/ai-chat/sessions/${currentSession._id}/message`,
@@ -113,6 +134,8 @@ const AIStudyAssistant = () => {
     } catch (error) {
       console.error('Error sending message:', error);
       alert('Failed to send message. Please try again.');
+      // Revert optimistic update on error
+      setCurrentSession(currentSession);
     } finally {
       setSendingMessage(false);
     }
@@ -348,8 +371,17 @@ const AIStudyAssistant = () => {
   );
 };
 
+const TypingIndicator = () => (
+  <div className="flex gap-1">
+    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+  </div>
+);
+
 const MessageBubble = ({ message }) => {
   const isUser = message.role === 'user';
+  const isTyping = message.isTyping;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -367,10 +399,16 @@ const MessageBubble = ({ message }) => {
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-sm'
             }`}
           >
-            <p className="whitespace-pre-wrap break-words text-base leading-relaxed">{message.content}</p>
-            <p className={`text-xs mt-2 ${isUser ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
-              {new Date(message.timestamp).toLocaleTimeString()}
-            </p>
+            {isTyping ? (
+              <TypingIndicator />
+            ) : (
+              <>
+                <p className="whitespace-pre-wrap break-words text-base leading-relaxed">{message.content}</p>
+                <p className={`text-xs mt-2 ${isUser ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
+                  {new Date(message.timestamp).toLocaleTimeString()}
+                </p>
+              </>
+            )}
           </div>
         </div>
         {isUser && (
