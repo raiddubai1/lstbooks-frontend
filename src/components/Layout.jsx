@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import BottomNav from './BottomNav';
 import { useState } from 'react';
 
 const Layout = () => {
@@ -11,12 +12,13 @@ const Layout = () => {
       <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       <div className="flex">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="flex-1 p-6 lg:ml-64 mt-16">
+        <main className="flex-1 p-4 md:p-6 lg:ml-64 mt-16 mb-16 md:mb-0">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
         </main>
       </div>
+      <BottomNav onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
     </div>
   );
 };

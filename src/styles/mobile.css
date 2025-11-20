@@ -165,6 +165,11 @@ body {
   }
 }
 
+/* Bottom navigation safe area */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 /* PWA display mode */
 @media (display-mode: standalone) {
   /* Hide browser UI elements when in standalone mode */
