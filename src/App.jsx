@@ -61,6 +61,7 @@ import AdminContent from './pages/AdminContent';
 import AdminUsers from './pages/AdminUsers';
 import StudentAnalytics from './pages/StudentAnalytics';
 import StudentDetail from './pages/StudentDetail';
+import ResourceCenter from './pages/ResourceCenter';
 
 function App() {
   useEffect(() => {
@@ -129,6 +130,7 @@ function App() {
             <Route path="admin/users" element={<AdminUsers />} />
             <Route path="student-analytics" element={<StudentAnalytics />} />
             <Route path="student-analytics/:studentId" element={<StudentDetail />} />
+            <Route path="resource-center" element={<ResourceCenter />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
