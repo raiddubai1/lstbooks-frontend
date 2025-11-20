@@ -127,53 +127,57 @@ const PeerReviews = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Peer Reviews</h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">Peer Reviews</h1>
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">
               Submit your work for feedback or review others' submissions
             </p>
           </div>
           <button
             onClick={handleCreateReview}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            className="bg-blue-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm md:text-base whitespace-nowrap"
           >
-            <Plus className="w-5 h-5" />
-            Submit for Review
+            <Plus className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="hidden sm:inline">Submit for Review</span>
+            <span className="sm:hidden">Submit</span>
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-6 py-2 rounded-lg transition-colors ${
+            className={`px-4 md:px-6 py-2 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap ${
               activeTab === 'all'
                 ? 'bg-blue-600 text-white'
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
           >
-            All Reviews ({reviews.length})
+            <span className="hidden sm:inline">All Reviews ({reviews.length})</span>
+            <span className="sm:hidden">All ({reviews.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('my-submissions')}
-            className={`px-6 py-2 rounded-lg transition-colors ${
+            className={`px-4 md:px-6 py-2 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap ${
               activeTab === 'my-submissions'
                 ? 'bg-blue-600 text-white'
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
           >
-            My Submissions ({mySubmissions.length})
+            <span className="hidden sm:inline">My Submissions ({mySubmissions.length})</span>
+            <span className="sm:hidden">Mine ({mySubmissions.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('my-reviews')}
-            className={`px-6 py-2 rounded-lg transition-colors ${
+            className={`px-4 md:px-6 py-2 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap ${
               activeTab === 'my-reviews'
                 ? 'bg-blue-600 text-white'
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
           >
-            Reviews Given ({myReviews.length})
+            <span className="hidden sm:inline">Reviews Given ({myReviews.length})</span>
+            <span className="sm:hidden">Given ({myReviews.length})</span>
           </button>
         </div>
 

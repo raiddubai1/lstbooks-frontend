@@ -92,27 +92,29 @@ const Flashcards = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 md:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Flashcards</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Master dental concepts with interactive flashcards</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Flashcards</h1>
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-2">Master dental concepts with interactive flashcards</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2 md:gap-3 flex-wrap">
           {filteredFlashcards.length > 0 && (
             <button
               onClick={handleStartStudy}
-              className="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors flex items-center gap-2"
+              className="bg-green-600 dark:bg-green-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors flex items-center gap-2 text-sm md:text-base whitespace-nowrap"
             >
-              <Play className="w-5 h-5" />
-              Study Mode
+              <Play className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="hidden sm:inline">Study Mode</span>
+              <span className="sm:hidden">Study</span>
             </button>
           )}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center gap-2"
+            className="bg-blue-600 dark:bg-blue-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 text-sm md:text-base whitespace-nowrap"
           >
-            <Plus className="w-5 h-5" />
-            Add Flashcards
+            <Plus className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="hidden sm:inline">Add Flashcards</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
       </div>

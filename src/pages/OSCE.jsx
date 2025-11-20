@@ -77,17 +77,18 @@ const OSCE = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">OSCE Stations</h1>
-            <p className="text-gray-600 mt-2">Practice clinical scenarios and examinations</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">OSCE Stations</h1>
+            <p className="text-sm md:text-base text-gray-600 mt-2">Practice clinical scenarios and examinations</p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 flex items-center gap-2 transition-colors"
+            className="bg-blue-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 flex items-center gap-2 transition-colors text-sm md:text-base whitespace-nowrap"
           >
-            <Plus className="w-5 h-5" />
-            Add OSCE Station
+            <Plus className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="hidden sm:inline">Add OSCE Station</span>
+            <span className="sm:hidden">Add Station</span>
           </button>
         </div>
       </div>

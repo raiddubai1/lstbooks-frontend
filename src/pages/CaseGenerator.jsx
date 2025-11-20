@@ -214,22 +214,23 @@ const CaseGenerator = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900">
       {/* Sidebar - Case Sessions */}
-      <div className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+      <div className="w-full md:w-80 bg-white dark:bg-gray-800 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex flex-col max-h-48 md:max-h-none overflow-hidden">
         {/* Header */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FileText className="w-6 h-6 text-purple-600" />
-              Case Generator
+        <div className="p-3 md:p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-2 md:mb-4">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
+              <span className="hidden sm:inline">Case Generator</span>
+              <span className="sm:hidden">Cases</span>
             </h2>
           </div>
           <button
             onClick={createNewSession}
-            className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-purple-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-4 h-4 md:w-5 md:h-5" />
             New Case
           </button>
         </div>
@@ -237,18 +238,18 @@ const CaseGenerator = () => {
         {/* Sessions List */}
         <div className="flex-1 overflow-y-auto">
           {sessions.length === 0 ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              <FileText className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">No cases yet</p>
-              <p className="text-xs mt-1">Generate your first clinical case!</p>
+            <div className="p-3 md:p-4 text-center text-gray-500 dark:text-gray-400">
+              <FileText className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 opacity-50" />
+              <p className="text-xs md:text-sm">No cases yet</p>
+              <p className="text-xs mt-1 hidden md:block">Generate your first clinical case!</p>
             </div>
           ) : (
-            <div className="p-2 space-y-2">
-              {sessions.map((session) => (
+            <div className="p-1 md:p-2 space-y-1 md:space-y-2">
+              {sessions.slice(0, 3).map((session) => (
                 <div
                   key={session._id}
                   onClick={() => setCurrentSession(session)}
-                  className={`p-3 rounded-lg cursor-pointer transition-colors group ${
+                  className={`p-2 md:p-3 rounded-lg cursor-pointer transition-colors group ${
                     currentSession?._id === session._id
                       ? 'bg-purple-50 dark:bg-purple-900/20 border-2 border-purple-600'
                       : 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 border-2 border-transparent'
@@ -256,7 +257,7 @@ const CaseGenerator = () => {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 dark:text-white truncate">
+                      <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white truncate">
                         {session.title}
                       </p>
                       <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
@@ -273,7 +274,7 @@ const CaseGenerator = () => {
                           session.isPinned ? 'text-purple-600' : 'text-gray-400'
                         }`}
                       >
-                        <Pin className="w-4 h-4" />
+                        <Pin className="w-3 h-3 md:w-4 md:h-4" />
                       </button>
                       <button
                         onClick={(e) => {
@@ -282,7 +283,7 @@ const CaseGenerator = () => {
                         }}
                         className="p-1 rounded hover:bg-red-100 dark:hover:bg-red-900/20 text-gray-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
                       </button>
                     </div>
                   </div>
@@ -298,17 +299,17 @@ const CaseGenerator = () => {
         {currentSession ? (
           <>
             {/* Header */}
-            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-3 md:p-4">
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">
                 {currentSession.title}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                AI-powered clinical case generation and analysis
+              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                AI-powered clinical case generation
               </p>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-3 md:space-y-4">
               {currentSession.messages.length === 0 && !sendingMessage ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center max-w-2xl">
@@ -408,22 +409,22 @@ const CaseGenerator = () => {
                 </div>
               )}
 
-              <form onSubmit={sendMessage} className="flex gap-3">
+              <form onSubmit={sendMessage} className="flex gap-2 md:gap-3">
                 <input
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Describe the type of case you want to generate..."
-                  className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:text-white"
+                  placeholder="Describe the case..."
+                  className="flex-1 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:text-white"
                   disabled={sendingMessage}
                 />
                 <button
                   type="submit"
                   disabled={!message.trim() || sendingMessage}
-                  className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-purple-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
                 >
-                  <Send className="w-5 h-5" />
-                  {sendingMessage ? 'Sending...' : 'Send'}
+                  <Send className="w-4 h-4 md:w-5 md:h-5" />
+                  <span className="hidden sm:inline">{sendingMessage ? 'Sending...' : 'Send'}</span>
                 </button>
               </form>
             </div>
