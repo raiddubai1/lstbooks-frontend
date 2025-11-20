@@ -26,7 +26,10 @@ import {
   Trophy,
   Award,
   HelpCircle,
-  Image
+  Image,
+  Upload,
+  Calendar,
+  Syringe
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -43,6 +46,7 @@ const studentMenuItems = [
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
   { icon: FlaskConical, label: 'Labs', path: '/labs' },
   { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+  { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
 
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -92,6 +96,7 @@ const teacherMenuItems = [
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
   { icon: FlaskConical, label: 'Labs', path: '/labs' },
   { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+  { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
 
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },
@@ -150,6 +155,7 @@ const adminMenuItems = [
   { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
   { icon: FlaskConical, label: 'Labs', path: '/labs' },
   { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+  { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
 
   // Study Tools
   { icon: Brain, label: 'Quizzes', path: '/quizzes' },

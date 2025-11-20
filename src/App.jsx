@@ -63,6 +63,7 @@ import StudentAnalytics from './pages/StudentAnalytics';
 import StudentDetail from './pages/StudentDetail';
 import ResourceCenter from './pages/ResourceCenter';
 import CoursePlanner from './pages/CoursePlanner';
+import TreatmentProtocols from './pages/TreatmentProtocols';
 
 function App() {
   useEffect(() => {
@@ -133,6 +134,7 @@ function App() {
             <Route path="student-analytics/:studentId" element={<StudentDetail />} />
             <Route path="resource-center" element={<ResourceCenter />} />
             <Route path="course-planner" element={<CoursePlanner />} />
+            <Route path="treatment-protocols" element={<TreatmentProtocols />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />
             <Route path="about" element={<About />} />
