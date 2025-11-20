@@ -1,0 +1,179 @@
+/* Mobile-specific optimizations */
+
+/* Safe area insets for notched devices */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Touch action optimization */
+body {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Better touch targets */
+button,
+a,
+input,
+select,
+textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Optimize font rendering on mobile */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animations */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Mobile-specific utilities */
+@media (max-width: 768px) {
+  /* Reduce padding on mobile */
+  .mobile-p-4 {
+    padding: 1rem;
+  }
+
+  /* Full width on mobile */
+  .mobile-full {
+    width: 100%;
+  }
+
+  /* Hide on mobile */
+  .mobile-hidden {
+    display: none;
+  }
+
+  /* Stack on mobile */
+  .mobile-stack {
+    flex-direction: column;
+  }
+
+  /* Smaller text on mobile */
+  .mobile-text-sm {
+    font-size: 0.875rem;
+  }
+
+  /* Bottom navigation safe area */
+  .bottom-nav {
+    padding-bottom: calc(1rem + var(--safe-area-inset-bottom));
+  }
+
+  /* Top header safe area */
+  .top-header {
+    padding-top: calc(1rem + var(--safe-area-inset-top));
+  }
+}
+
+/* Landscape mode optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .landscape-compact {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Optimize images for retina displays */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Dark mode optimizations for OLED screens */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* PWA display mode */
+@media (display-mode: standalone) {
+  /* Hide browser UI elements when in standalone mode */
+  .pwa-only {
+    display: block;
+  }
+
+  .browser-only {
+    display: none;
+  }
+}
+

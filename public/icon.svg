@@ -1,0 +1,8 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="128" fill="#2563eb"/>
+  <path d="M256 96C194.144 96 144 146.144 144 208C144 269.856 194.144 320 256 320C317.856 320 368 269.856 368 208C368 146.144 317.856 96 256 96Z" fill="white"/>
+  <path d="M256 352C211.817 352 176 387.817 176 432H336C336 387.817 300.183 352 256 352Z" fill="white"/>
+  <circle cx="256" cy="208" r="32" fill="#2563eb"/>
+  <text x="256" y="450" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="white" text-anchor="middle">LST</text>
+</svg>
+

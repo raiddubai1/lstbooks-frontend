@@ -1,6 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
+import OfflineIndicator from './components/OfflineIndicator';
+import InstallPrompt from './components/InstallPrompt';
+import { registerServiceWorker } from './utils/pwa';
+import { initDB } from './utils/offlineStorage';
 import Home from './pages/Home';
 import Years from './pages/Years';
 import YearDetail from './pages/YearDetail';
@@ -48,8 +53,18 @@ import Settings from './pages/Settings';
 import About from './pages/About';
 
 function App() {
+  useEffect(() => {
+    // Register service worker for PWA
+    registerServiceWorker();
+
+    // Initialize offline database
+    initDB().catch(console.error);
+  }, []);
+
   return (
     <ThemeProvider>
+      <OfflineIndicator />
+      <InstallPrompt />
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />

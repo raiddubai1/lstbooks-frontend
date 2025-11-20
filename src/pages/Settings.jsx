@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { getUser, setUser } from '../utils/auth';
 import { useTheme } from '../contexts/ThemeContext';
 import SectionHeader from '../components/SectionHeader';
-import { User, Bell, Lock, Palette, Sun, Moon, Monitor } from 'lucide-react';
+import PWASettings from '../components/PWASettings';
+import { User, Bell, Lock, Palette, Sun, Moon, Monitor, Smartphone } from 'lucide-react';
 
 const Settings = () => {
   const user = getUser();
@@ -67,6 +68,15 @@ const Settings = () => {
             >
               <Palette className="w-5 h-5" />
               Appearance
+            </button>
+            <button
+              onClick={() => setActiveTab('pwa')}
+              className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 ${
+                activeTab === 'pwa' ? 'bg-primary-50 text-primary-700' : 'hover:bg-gray-50'
+              }`}
+            >
+              <Smartphone className="w-5 h-5" />
+              Mobile & Offline
             </button>
           </div>
         </div>
@@ -305,6 +315,12 @@ const Settings = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {activeTab === 'pwa' && (
+            <div className="card">
+              <PWASettings />
             </div>
           )}
         </div>
