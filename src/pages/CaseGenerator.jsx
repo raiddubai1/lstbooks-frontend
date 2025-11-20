@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
-import { Send, Plus, Trash2, Pin, FileText, Brain, Lightbulb } from 'lucide-react';
+import { Send, Plus, Trash2, Pin, FileText, Brain, Lightbulb, AlertCircle, RefreshCw } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 const CaseGenerator = () => {
   const [sessions, setSessions] = useState([]);
@@ -8,6 +9,8 @@ const CaseGenerator = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [sendingMessage, setSendingMessage] = useState(false);
+  const [error, setError] = useState(null);
+  const [lastFailedMessage, setLastFailedMessage] = useState(null);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -82,27 +85,71 @@ const CaseGenerator = () => {
     }
   };
 
-  const sendMessage = async (e) => {
-    e.preventDefault();
-    if (!message.trim() || !currentSession) return;
+  const sendMessage = async (e, retryMessage = null) => {
+    if (e) e.preventDefault();
 
-    const userMessage = message;
+    const userMessage = retryMessage || message;
+    if (!userMessage.trim() || !currentSession) return;
+
     setMessage('');
     setSendingMessage(true);
+    setError(null);
+    setLastFailedMessage(null);
+
+    // Optimistically add user message to UI
+    const optimisticSession = {
+      ...currentSession,
+      messages: [
+        ...currentSession.messages,
+        {
+          role: 'user',
+          content: userMessage,
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+    setCurrentSession(optimisticSession);
 
     try {
       const response = await api.post(
         `/ai-chat/sessions/${currentSession._id}/message`,
-        { content: userMessage }
+        { content: userMessage },
+        { timeout: 60000 } // 60 second timeout for AI generation
       );
 
       setCurrentSession(response.data);
       setSessions(sessions.map(s => s._id === response.data._id ? response.data : s));
+      setError(null);
     } catch (error) {
       console.error('Error sending message:', error);
-      alert('Failed to send message. Please try again.');
+
+      // Revert optimistic update on error
+      setCurrentSession(currentSession);
+
+      // Set error message based on error type
+      let errorMessage = 'Failed to send message. ';
+      if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+        errorMessage += 'The request timed out. The AI might be busy - please try again.';
+      } else if (error.response?.status === 429) {
+        errorMessage += 'Too many requests. Please wait a moment and try again.';
+      } else if (error.response?.status >= 500) {
+        errorMessage += 'Server error. Please try again in a moment.';
+      } else if (!navigator.onLine) {
+        errorMessage += 'No internet connection. Please check your network.';
+      } else {
+        errorMessage += 'Please try again.';
+      }
+
+      setError(errorMessage);
+      setLastFailedMessage(userMessage);
     } finally {
       setSendingMessage(false);
+    }
+  };
+
+  const retryLastMessage = () => {
+    if (lastFailedMessage) {
+      sendMessage(null, lastFailedMessage);
     }
   };
 
@@ -262,7 +309,7 @@ const CaseGenerator = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {currentSession.messages.length === 0 ? (
+              {currentSession.messages.length === 0 && !sendingMessage ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center max-w-2xl">
                     <FileText className="w-16 h-16 text-purple-600 mx-auto mb-4" />
@@ -311,15 +358,56 @@ const CaseGenerator = () => {
                   </div>
                 </div>
               ) : (
-                currentSession.messages.map((msg, index) => (
-                  <MessageBubble key={index} message={msg} />
-                ))
+                <>
+                  {currentSession.messages.map((msg, index) => (
+                    <MessageBubble key={index} message={msg} />
+                  ))}
+                  {sendingMessage && (
+                    <div className="flex justify-start">
+                      <div className="max-w-3xl px-4 py-3 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <div className="flex items-center gap-2">
+                          <div className="flex gap-1">
+                            <div className="w-2 h-2 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                            <div className="w-2 h-2 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                            <div className="w-2 h-2 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                          </div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">AI is generating your case...</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
               <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
             <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
+              {/* Error Message */}
+              {error && (
+                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+                  </div>
+                  {lastFailedMessage && (
+                    <button
+                      onClick={retryLastMessage}
+                      className="flex items-center gap-1 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      Retry
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setError(null)}
+                    className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+
               <form onSubmit={sendMessage} className="flex gap-3">
                 <input
                   type="text"
@@ -367,7 +455,32 @@ const MessageBubble = ({ message }) => {
             : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'
         }`}
       >
-        <p className="whitespace-pre-wrap">{message.content}</p>
+        {isUser ? (
+          <p className="whitespace-pre-wrap">{message.content}</p>
+        ) : (
+          <div className="prose prose-sm dark:prose-invert max-w-none">
+            <ReactMarkdown
+              components={{
+                h1: ({node, ...props}) => <h1 className="text-xl font-bold mt-4 mb-2 text-gray-900 dark:text-white" {...props} />,
+                h2: ({node, ...props}) => <h2 className="text-lg font-bold mt-3 mb-2 text-gray-900 dark:text-white" {...props} />,
+                h3: ({node, ...props}) => <h3 className="text-base font-semibold mt-2 mb-1 text-gray-900 dark:text-white" {...props} />,
+                p: ({node, ...props}) => <p className="mb-2 text-gray-900 dark:text-white" {...props} />,
+                ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 text-gray-900 dark:text-white" {...props} />,
+                ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 text-gray-900 dark:text-white" {...props} />,
+                li: ({node, ...props}) => <li className="mb-1 text-gray-900 dark:text-white" {...props} />,
+                strong: ({node, ...props}) => <strong className="font-bold text-gray-900 dark:text-white" {...props} />,
+                em: ({node, ...props}) => <em className="italic text-gray-900 dark:text-white" {...props} />,
+                code: ({node, inline, ...props}) =>
+                  inline
+                    ? <code className="bg-gray-300 dark:bg-gray-600 px-1 rounded text-sm text-gray-900 dark:text-white" {...props} />
+                    : <code className="block bg-gray-300 dark:bg-gray-600 p-2 rounded text-sm mb-2 text-gray-900 dark:text-white" {...props} />,
+                hr: ({node, ...props}) => <hr className="my-3 border-gray-400 dark:border-gray-500" {...props} />,
+              }}
+            >
+              {message.content}
+            </ReactMarkdown>
+          </div>
+        )}
         <p className={`text-xs mt-2 ${isUser ? 'text-purple-100' : 'text-gray-500 dark:text-gray-400'}`}>
           {new Date(message.timestamp).toLocaleTimeString()}
         </p>

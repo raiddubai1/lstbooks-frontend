@@ -34,7 +34,7 @@ const Navbar = ({ onMenuClick }) => {
             </button>
             <Link to="/" className="flex items-center gap-2">
               <span className="text-2xl">🦷</span>
-              <span className="text-xl font-bold text-primary-600 dark:text-primary-400">lstBooks</span>
+              <span className="text-2xl font-extrabold text-orange-600 dark:text-orange-500 tracking-tight" style={{ fontFamily: "'Poppins', 'Inter', sans-serif" }}>lstBooks</span>
             </Link>
           </div>
 
