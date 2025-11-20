@@ -151,7 +151,7 @@ const AIStudyAssistant = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-900 overflow-hidden">
+    <div className="fixed inset-0 md:static md:h-[calc(100vh-4rem)] flex flex-col md:flex-row bg-gray-50 dark:bg-gray-900 overflow-hidden z-[100]">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -260,11 +260,11 @@ const AIStudyAssistant = () => {
         {currentSession ? (
           <>
             {/* Chat Header - Mobile Optimized */}
-            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-3 md:px-4 py-3 flex items-center gap-2 md:gap-3 flex-shrink-0">
+            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center gap-3 flex-shrink-0">
               {/* Back to Chats Button - Mobile */}
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg flex items-center gap-1 text-gray-700 dark:text-gray-300"
+                className="md:hidden p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg flex items-center gap-1.5 text-gray-700 dark:text-gray-300 -ml-1"
                 title="View all chats"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -289,26 +289,26 @@ const AIStudyAssistant = () => {
               {/* New Chat Button - Mobile */}
               <button
                 onClick={createNewSession}
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-blue-600 flex-shrink-0"
+                className="md:hidden p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-blue-600 flex-shrink-0"
                 title="New chat"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-6 h-6" />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 overscroll-contain">
+            <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-3 md:space-y-4 overscroll-contain bg-gray-50 dark:bg-gray-900">
               {currentSession.messages.length === 0 ? (
-                <div className="flex items-center justify-center h-full">
+                <div className="flex items-center justify-center h-full px-4">
                   <div className="text-center max-w-md">
-                    <Sparkles className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    <Sparkles className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-3 md:mb-4" />
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">
                       Welcome to AI Study Assistant!
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-3 md:mb-4">
                       I'm here to help you with your dental studies. Ask me anything about:
                     </p>
-                    <ul className="text-left text-gray-600 dark:text-gray-400 space-y-2">
+                    <ul className="text-left text-sm md:text-base text-gray-600 dark:text-gray-400 space-y-1.5 md:space-y-2">
                       <li>• Anatomy and physiology concepts</li>
                       <li>• Clinical procedures and techniques</li>
                       <li>• Study tips and exam preparation</li>
@@ -326,23 +326,23 @@ const AIStudyAssistant = () => {
             </div>
 
             {/* Input Area - Mobile Optimized */}
-            <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 flex-shrink-0">
+            <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 md:p-4 flex-shrink-0 pb-safe">
               <div className="max-w-4xl mx-auto">
-                <form onSubmit={sendMessage} className="flex gap-2 md:gap-3 items-end">
+                <form onSubmit={sendMessage} className="flex gap-2 items-center">
                   <div className="flex-1 relative">
                     <input
                       type="text"
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Ask me anything..."
-                      className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-base"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-base resize-none"
                       disabled={sendingMessage}
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={!message.trim() || sendingMessage}
-                    className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                    className="bg-blue-600 text-white p-3.5 rounded-full hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 active:scale-95"
                   >
                     <Send className="w-5 h-5" />
                   </button>

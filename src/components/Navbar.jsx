@@ -5,7 +5,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { logout } from '../utils/auth';
 import { useState } from 'react';
 
-const Navbar = ({ onMenuClick }) => {
+const Navbar = ({ onMenuClick, className = '' }) => {
   const { user, isAuthenticated } = useAuth();
   const { theme, setTheme, isDark } = useTheme();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Navbar = ({ onMenuClick }) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-50">
+    <nav className={`fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-50 ${className}`}>
       <div className="px-4 lg:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Left side */}

@@ -170,6 +170,11 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* Safe area for input fields */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
 /* PWA display mode */
 @media (display-mode: standalone) {
   /* Hide browser UI elements when in standalone mode */

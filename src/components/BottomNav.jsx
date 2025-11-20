@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
-const BottomNav = ({ onMenuClick }) => {
+const BottomNav = ({ onMenuClick, className = '' }) => {
   const location = useLocation();
   const { user } = useAuth();
   const [showQuickMenu, setShowQuickMenu] = useState(false);
@@ -66,7 +66,7 @@ const BottomNav = ({ onMenuClick }) => {
   return (
     <>
       {/* Bottom Navigation Bar - Mobile Only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-40 safe-area-bottom">
+      <nav className={`md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-40 safe-area-bottom ${className}`}>
         <div className="grid grid-cols-5 h-16">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -113,7 +113,7 @@ const BottomNav = ({ onMenuClick }) => {
       </nav>
 
       {/* Spacer for bottom nav - Mobile Only */}
-      <div className="md:hidden h-16" />
+      <div className={`md:hidden h-16 ${className}`} />
     </>
   );
 };
