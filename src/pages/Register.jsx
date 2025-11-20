@@ -9,8 +9,12 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
+    role: 'student', // Default to student
     year: '',
-    university: ''
+    university: '',
+    // Teacher-specific fields
+    specialization: '',
+    bio: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -48,6 +52,45 @@ const Register = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Role Selection */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              I am a:
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, role: 'student' })}
+                className={`p-4 rounded-lg border-2 transition-all ${
+                  formData.role === 'student'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
+                    : 'border-gray-300 dark:border-gray-600 hover:border-blue-300'
+                }`}
+              >
+                <div className="text-3xl mb-2">🎓</div>
+                <div className="font-semibold text-gray-900 dark:text-white">Student</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  Access learning materials
+                </div>
+              </button>
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, role: 'teacher' })}
+                className={`p-4 rounded-lg border-2 transition-all ${
+                  formData.role === 'teacher'
+                    ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30'
+                    : 'border-gray-300 dark:border-gray-600 hover:border-purple-300'
+                }`}
+              >
+                <div className="text-3xl mb-2">👨‍🏫</div>
+                <div className="font-semibold text-gray-900 dark:text-white">Teacher</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  Create and manage content
+                </div>
+              </button>
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Full Name
@@ -90,45 +133,93 @@ const Register = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Year
-              </label>
-              <select
-                className="input"
-                value={formData.year}
-                onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-              >
-                <option value="">Select</option>
-                <option value="1">Year 1</option>
-                <option value="2">Year 2</option>
-                <option value="3">Year 3</option>
-                <option value="4">Year 4</option>
-                <option value="5">Year 5</option>
-              </select>
-            </div>
+          {/* Student-specific fields */}
+          {formData.role === 'student' && (
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Year
+                </label>
+                <select
+                  className="input"
+                  value={formData.year}
+                  onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                >
+                  <option value="">Select</option>
+                  <option value="1">Year 1</option>
+                  <option value="2">Year 2</option>
+                  <option value="3">Year 3</option>
+                  <option value="4">Year 4</option>
+                  <option value="5">Year 5</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                University
-              </label>
-              <input
-                type="text"
-                className="input"
-                value={formData.university}
-                onChange={(e) => setFormData({ ...formData, university: e.target.value })}
-                placeholder="University"
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  University
+                </label>
+                <input
+                  type="text"
+                  className="input"
+                  value={formData.university}
+                  onChange={(e) => setFormData({ ...formData, university: e.target.value })}
+                  placeholder="University"
+                />
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Teacher-specific fields */}
+          {formData.role === 'teacher' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  University/Institution
+                </label>
+                <input
+                  type="text"
+                  required
+                  className="input"
+                  value={formData.university}
+                  onChange={(e) => setFormData({ ...formData, university: e.target.value })}
+                  placeholder="e.g., University of Dubai"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Specialization
+                </label>
+                <input
+                  type="text"
+                  className="input"
+                  value={formData.specialization}
+                  onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
+                  placeholder="e.g., Oral Pathology, Periodontology"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Bio (Optional)
+                </label>
+                <textarea
+                  className="input"
+                  rows="3"
+                  value={formData.bio}
+                  onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                  placeholder="Brief description about yourself and your teaching experience"
+                />
+              </div>
+            </>
+          )}
 
           <button
             type="submit"
             disabled={loading}
             className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Creating account...' : 'Sign Up'}
+            {loading ? 'Creating account...' : `Sign Up as ${formData.role === 'teacher' ? 'Teacher' : 'Student'}`}
           </button>
         </form>
 
