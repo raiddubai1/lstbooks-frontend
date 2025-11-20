@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Save } from 'lucide-react';
+import { X, Save, Upload, FileText } from 'lucide-react';
 
 const SharedResourceModal = ({ subjects, years, onSave, onClose }) => {
   const [formData, setFormData] = useState({
@@ -19,6 +19,9 @@ const SharedResourceModal = ({ subjects, years, onSave, onClose }) => {
     isPublic: true
   });
   const [tagInput, setTagInput] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const resourceTypes = [
     { value: 'file', label: 'File' },
@@ -40,6 +43,60 @@ const SharedResourceModal = ({ subjects, years, onSave, onClose }) => {
     { value: 'other', label: 'Other' }
   ];
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    processFile(file);
+  };
+
+  const processFile = (file) => {
+    if (file) {
+      // Check file size (10MB max)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Update form data with file info
+      setFormData({
+        ...formData,
+        fileName: file.name,
+        fileSize: file.size,
+        mimeType: file.type
+      });
+
+      // Create preview for images
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFilePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        setFilePreview(null);
+      }
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    processFile(file);
+  };
+
   const handleAddTag = () => {
     if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
       setFormData({
@@ -57,9 +114,28 @@ const SharedResourceModal = ({ subjects, years, onSave, onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+
+    // If a file is selected, we need to upload it first
+    if (selectedFile) {
+      // Create FormData for file upload
+      const uploadData = new FormData();
+      uploadData.append('file', selectedFile);
+
+      // Add all other form fields
+      Object.keys(formData).forEach(key => {
+        if (key === 'tags') {
+          uploadData.append(key, JSON.stringify(formData[key]));
+        } else if (formData[key]) {
+          uploadData.append(key, formData[key]);
+        }
+      });
+
+      onSave(uploadData);
+    } else {
+      onSave(formData);
+    }
   };
 
   return (
@@ -152,34 +228,73 @@ const SharedResourceModal = ({ subjects, years, onSave, onClose }) => {
           {/* Conditional Fields Based on Resource Type */}
           {formData.resourceType === 'file' && (
             <div className="space-y-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <p className="text-sm text-blue-800 dark:text-blue-300 font-medium">
-                File Upload (Note: For this demo, please provide a direct file URL)
+              <p className="text-sm text-blue-800 dark:text-blue-300 font-medium mb-2">
+                Upload File
               </p>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                  File URL *
-                </label>
+
+              {/* File Upload Area */}
+              <div
+                className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+                  isDragging
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
+                    : 'border-blue-300 dark:border-blue-700'
+                }`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
                 <input
-                  type="url"
-                  value={formData.fileUrl}
-                  onChange={(e) => setFormData({ ...formData, fileUrl: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="https://example.com/file.pdf"
-                  required
+                  type="file"
+                  id="file-upload"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                  File Name
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <Upload className="w-12 h-12 text-blue-500 dark:text-blue-400 mb-3" />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Click to upload or drag and drop
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    PDF, DOC, PPT, XLS, Images (Max 10MB)
+                  </span>
                 </label>
-                <input
-                  type="text"
-                  value={formData.fileName}
-                  onChange={(e) => setFormData({ ...formData, fileName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="document.pdf"
-                />
               </div>
+
+              {/* File Preview */}
+              {selectedFile && (
+                <div className="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                  <div className="flex items-center gap-3">
+                    {filePreview ? (
+                      <img src={filePreview} alt="Preview" className="w-16 h-16 object-cover rounded" />
+                    ) : (
+                      <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center">
+                        <FileText className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <p className="font-medium text-gray-900 dark:text-white">{selectedFile.name}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedFile(null);
+                        setFilePreview(null);
+                        setFormData({ ...formData, fileName: '', fileSize: 0, mimeType: '' });
+                      }}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

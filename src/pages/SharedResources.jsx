@@ -89,12 +89,18 @@ const SharedResources = () => {
 
   const handleSaveResource = async (resourceData) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/shared-resources`, resourceData);
+      // Check if resourceData is FormData (file upload) or regular object
+      const config = resourceData instanceof FormData
+        ? { headers: { 'Content-Type': 'multipart/form-data' } }
+        : {};
+
+      await axios.post(`${import.meta.env.VITE_API_URL}/shared-resources`, resourceData, config);
       setIsModalOpen(false);
       fetchResources();
       fetchMyResources();
     } catch (error) {
       console.error('Error creating shared resource:', error);
+      alert('Error creating resource: ' + (error.response?.data?.error || error.message));
     }
   };
 
