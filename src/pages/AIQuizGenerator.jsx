@@ -398,7 +398,7 @@ const AIQuizGenerator = () => {
               <p className="text-gray-600 dark:text-gray-400">Generating questions with AI...</p>
             </div>
           ) : generatedQuestions.length > 0 ? (
-            <div className="space-y-4 max-h-[600px] overflow-y-auto">
+            <div className="space-y-4 max-h-[calc(100vh-280px)] overflow-y-auto pr-2">
               {generatedQuestions.map((q, index) => (
                 <div key={index} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <div className="flex items-start gap-2 mb-2">
