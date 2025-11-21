@@ -87,6 +87,7 @@ const menuStructure = {
       defaultOpen: false,
       items: [
         { icon: TrendingUp, label: 'Performance Analytics', path: '/performance' },
+        { icon: Calendar, label: 'Study Plans', path: '/study-plans' },
         { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
         { icon: FileText, label: 'Notes', path: '/notes' },
       ]
@@ -163,6 +164,7 @@ const menuStructure = {
       defaultOpen: false,
       items: [
         { icon: TrendingUp, label: 'Performance Analytics', path: '/performance' },
+        { icon: Calendar, label: 'Study Plans', path: '/study-plans' },
         { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
         { icon: FileText, label: 'Notes', path: '/notes' },
       ]

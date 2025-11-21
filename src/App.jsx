@@ -50,6 +50,8 @@ import AIFlashcardGenerator from './pages/AIFlashcardGenerator';
 import SpacedRepetition from './pages/SpacedRepetition';
 import RevisionNotes from './pages/RevisionNotes';
 import RevisionNoteDetail from './pages/RevisionNoteDetail';
+import StudyPlans from './pages/StudyPlans';
+import StudyPlanDetail from './pages/StudyPlanDetail';
 
 function App() {
   useEffect(() => {
@@ -89,6 +91,8 @@ function App() {
             <Route path="photos" element={<PhotoLibrary />} />
             <Route path="revision-notes" element={<RevisionNotes />} />
             <Route path="revision-notes/:id" element={<RevisionNoteDetail />} />
+            <Route path="study-plans" element={<StudyPlans />} />
+            <Route path="study-plans/:id" element={<StudyPlanDetail />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="performance" element={<PerformanceAnalytics />} />
             <Route path="notes" element={<Notes />} />
