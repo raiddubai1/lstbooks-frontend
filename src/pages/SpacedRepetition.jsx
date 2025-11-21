@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import SectionHeader from '../components/SectionHeader';
 import Loading from '../components/Loading';
+import AddDeckModal from '../components/AddDeckModal';
+import EditDeckModal from '../components/EditDeckModal';
+import DeckDetailModal from '../components/DeckDetailModal';
 import {
   Brain,
   Plus,
@@ -13,13 +16,19 @@ import {
   BookOpen,
   CheckCircle,
   AlertCircle,
-  Zap
+  Zap,
+  Edit,
+  Trash2,
+  Eye
 } from 'lucide-react';
 
 const SpacedRepetition = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [decks, setDecks] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedDeck, setSelectedDeck] = useState(null);
+  const [editingDeck, setEditingDeck] = useState(null);
   const [filter, setFilter] = useState({
     category: '',
     search: ''
@@ -151,7 +160,7 @@ const SpacedRepetition = () => {
             ))}
           </select>
           <button
-            onClick={() => navigate('/spaced-repetition/create')}
+            onClick={() => setShowAddModal(true)}
             className="btn-primary flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
@@ -171,7 +180,7 @@ const SpacedRepetition = () => {
             Create your first spaced repetition deck to start learning smarter
           </p>
           <button
-            onClick={() => navigate('/spaced-repetition/create')}
+            onClick={() => setShowAddModal(true)}
             className="btn-primary inline-flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
@@ -183,8 +192,7 @@ const SpacedRepetition = () => {
           {decks.map((deck) => (
             <div
               key={deck._id}
-              className="card hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate(`/spaced-repetition/deck/${deck._id}`)}
+              className="card hover:shadow-lg transition-shadow"
             >
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
@@ -307,22 +315,68 @@ const SpacedRepetition = () => {
                 </div>
               )}
 
-              {/* Study Button */}
-              {((deck.newCards || 0) + (deck.reviewCards || 0)) > 0 && (
+              {/* Action Buttons */}
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex gap-2">
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/spaced-repetition/study/${deck._id}`);
-                  }}
-                  className="mt-4 w-full btn-primary flex items-center justify-center gap-2"
+                  onClick={() => setSelectedDeck(deck)}
+                  className="flex-1 btn-secondary text-sm py-2"
                 >
-                  <Zap className="w-4 h-4" />
-                  Study Now ({(deck.newCards || 0) + (deck.reviewCards || 0)} cards)
+                  <Eye className="w-4 h-4 inline mr-1" />
+                  View
                 </button>
-              )}
+                <button
+                  onClick={() => setEditingDeck(deck)}
+                  className="btn-secondary text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 p-2"
+                >
+                  <Edit className="w-4 h-4" />
+                </button>
+                {((deck.newCards || 0) + (deck.reviewCards || 0)) > 0 && (
+                  <button
+                    onClick={() => navigate(`/spaced-repetition/study/${deck._id}`)}
+                    className="flex-1 btn-primary text-sm py-2"
+                  >
+                    <Zap className="w-4 h-4 inline mr-1" />
+                    Study ({(deck.newCards || 0) + (deck.reviewCards || 0)})
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
+      )}
+
+      {/* Modals */}
+      {showAddModal && (
+        <AddDeckModal
+          onClose={() => setShowAddModal(false)}
+          onSuccess={() => {
+            setShowAddModal(false);
+            fetchDecks();
+          }}
+        />
+      )}
+
+      {selectedDeck && (
+        <DeckDetailModal
+          deck={selectedDeck}
+          onClose={() => setSelectedDeck(null)}
+          onEdit={(deck) => {
+            setSelectedDeck(null);
+            setEditingDeck(deck);
+          }}
+          onUpdate={fetchDecks}
+        />
+      )}
+
+      {editingDeck && (
+        <EditDeckModal
+          deck={editingDeck}
+          onClose={() => setEditingDeck(null)}
+          onSuccess={() => {
+            setEditingDeck(null);
+            fetchDecks();
+          }}
+        />
       )}
     </div>
   );
