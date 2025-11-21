@@ -56,6 +56,14 @@ const AIQuizGenerator = () => {
       setError('');
       setGeneratedQuestions([]);
 
+      console.log('Sending request to generate quiz with data:', {
+        topic: formData.topic,
+        difficulty: formData.difficulty,
+        questionCount: formData.questionCount,
+        questionTypes: formData.questionTypes,
+        includeExplanations: formData.includeExplanations
+      });
+
       const response = await api.post('/ai-quiz-generator/generate', {
         topic: formData.topic,
         difficulty: formData.difficulty,
@@ -64,12 +72,32 @@ const AIQuizGenerator = () => {
         includeExplanations: formData.includeExplanations
       });
 
+      console.log('Received response:', response.data);
       setGeneratedQuestions(response.data.questions);
       setSuccess(`Generated ${response.data.questions.length} questions successfully!`);
       setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       console.error('Error generating quiz:', error);
-      setError(error.response?.data?.error || 'Failed to generate quiz. Please try again.');
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+
+      let errorMessage = 'Failed to generate quiz. Please try again.';
+
+      if (error.response) {
+        // Server responded with error
+        if (error.response.status === 403) {
+          errorMessage = 'Access denied. Only teachers and admins can generate quizzes.';
+        } else if (error.response.status === 401) {
+          errorMessage = 'Please log in to generate quizzes.';
+        } else {
+          errorMessage = error.response.data?.error || error.response.data?.message || errorMessage;
+        }
+      } else if (error.request) {
+        // Request made but no response
+        errorMessage = 'Cannot connect to server. Please check your internet connection.';
+      }
+
+      setError(errorMessage);
       setTimeout(() => setError(''), 5000);
     } finally {
       setLoading(false);
@@ -87,6 +115,18 @@ const AIQuizGenerator = () => {
       setLoading(true);
       setError('');
 
+      console.log('Creating quiz with data:', {
+        title: formData.title,
+        topic: formData.topic,
+        subject: formData.subject,
+        year: formData.year,
+        difficulty: formData.difficulty,
+        questionCount: formData.questionCount,
+        questionTypes: formData.questionTypes,
+        includeExplanations: formData.includeExplanations,
+        timeLimit: formData.timeLimit
+      });
+
       const response = await api.post('/ai-quiz-generator/create-quiz', {
         title: formData.title,
         topic: formData.topic,
@@ -99,13 +139,33 @@ const AIQuizGenerator = () => {
         timeLimit: formData.timeLimit
       });
 
+      console.log('Quiz created successfully:', response.data);
       setSuccess('Quiz created successfully! Redirecting...');
       setTimeout(() => {
         navigate(`/quizzes/${response.data.quiz._id}`);
       }, 1000);
     } catch (error) {
       console.error('Error creating quiz:', error);
-      setError(error.response?.data?.error || 'Failed to create quiz. Please try again.');
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+
+      let errorMessage = 'Failed to create quiz. Please try again.';
+
+      if (error.response) {
+        // Server responded with error
+        if (error.response.status === 403) {
+          errorMessage = 'Access denied. Only teachers and admins can create quizzes.';
+        } else if (error.response.status === 401) {
+          errorMessage = 'Please log in to create quizzes.';
+        } else {
+          errorMessage = error.response.data?.error || error.response.data?.message || errorMessage;
+        }
+      } else if (error.request) {
+        // Request made but no response
+        errorMessage = 'Cannot connect to server. Please check your internet connection.';
+      }
+
+      setError(errorMessage);
       setTimeout(() => setError(''), 5000);
     } finally {
       setLoading(false);
