@@ -19,7 +19,8 @@ import {
   Zap,
   Edit,
   Trash2,
-  Eye
+  Eye,
+  Sparkles
 } from 'lucide-react';
 
 const SpacedRepetition = () => {
@@ -85,6 +86,26 @@ const SpacedRepetition = () => {
       <SectionHeader
         title="Spaced Repetition System"
         subtitle="Master your knowledge with scientifically-proven spaced repetition learning"
+        action={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/ai-flashcard-generator')}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-700 dark:to-pink-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 transition-all flex items-center gap-2 text-sm md:text-base whitespace-nowrap shadow-lg hover:shadow-xl"
+            >
+              <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="hidden sm:inline">Generate with AI</span>
+              <span className="sm:hidden">AI</span>
+            </button>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-blue-600 dark:bg-blue-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 text-sm md:text-base whitespace-nowrap"
+            >
+              <Plus className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="hidden sm:inline">Add Deck</span>
+              <span className="sm:hidden">Add</span>
+            </button>
+          </div>
+        }
       />
 
       {/* Stats Overview */}
@@ -159,13 +180,6 @@ const SpacedRepetition = () => {
               </option>
             ))}
           </select>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="btn-primary flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            Create Deck
-          </button>
         </div>
       </div>
 
