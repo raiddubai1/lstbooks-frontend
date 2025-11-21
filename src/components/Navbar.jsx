@@ -66,10 +66,10 @@ const Navbar = ({ onMenuClick, className = '' }) => {
               )}
             </button>
 
-            <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative">
+            <Link to="/reminders" className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative">
               <Bell className="w-6 h-6 text-gray-600 dark:text-gray-300" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
+            </Link>
 
             {isAuthenticated ? (
               <div className="relative">

@@ -8,6 +8,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 30000, // 30 second timeout
 });
 
 // Add auth token to requests
@@ -18,6 +19,38 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Add response interceptor for automatic retry on network errors
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const config = error.config;
+
+    // Don't retry if we've already retried or if it's not a network error
+    if (!config || config.__retryCount >= 2) {
+      return Promise.reject(error);
+    }
+
+    // Only retry on network errors or 5xx server errors
+    const shouldRetry =
+      !error.response || // Network error
+      (error.response.status >= 500 && error.response.status < 600); // Server error
+
+    if (shouldRetry) {
+      config.__retryCount = config.__retryCount || 0;
+      config.__retryCount += 1;
+
+      // Wait before retrying (exponential backoff)
+      const delay = config.__retryCount * 2000; // 2s, 4s
+      await new Promise(resolve => setTimeout(resolve, delay));
+
+      console.log(`Retrying request (attempt ${config.__retryCount}/2)...`);
+      return api(config);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 // Subjects
 export const getSubjects = () => api.get('/subjects');
