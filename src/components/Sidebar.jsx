@@ -25,7 +25,8 @@ import {
   Syringe,
   ChevronDown,
   ChevronRight,
-  Zap
+  Zap,
+  AlertTriangle
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -87,6 +88,7 @@ const menuStructure = {
       defaultOpen: false,
       items: [
         { icon: TrendingUp, label: 'Performance Analytics', path: '/performance' },
+        { icon: AlertTriangle, label: 'Weak Areas', path: '/weak-areas' },
         { icon: Calendar, label: 'Study Plans', path: '/study-plans' },
         { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
         { icon: FileText, label: 'Notes', path: '/notes' },
@@ -164,6 +166,7 @@ const menuStructure = {
       defaultOpen: false,
       items: [
         { icon: TrendingUp, label: 'Performance Analytics', path: '/performance' },
+        { icon: AlertTriangle, label: 'Weak Areas', path: '/weak-areas' },
         { icon: Calendar, label: 'Study Plans', path: '/study-plans' },
         { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
         { icon: FileText, label: 'Notes', path: '/notes' },

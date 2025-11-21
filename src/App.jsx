@@ -52,6 +52,7 @@ import RevisionNotes from './pages/RevisionNotes';
 import RevisionNoteDetail from './pages/RevisionNoteDetail';
 import StudyPlans from './pages/StudyPlans';
 import StudyPlanDetail from './pages/StudyPlanDetail';
+import WeakAreas from './pages/WeakAreas';
 
 function App() {
   useEffect(() => {
@@ -93,6 +94,7 @@ function App() {
             <Route path="revision-notes/:id" element={<RevisionNoteDetail />} />
             <Route path="study-plans" element={<StudyPlans />} />
             <Route path="study-plans/:id" element={<StudyPlanDetail />} />
+            <Route path="weak-areas" element={<WeakAreas />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="performance" element={<PerformanceAnalytics />} />
             <Route path="notes" element={<Notes />} />
