@@ -597,6 +597,10 @@ const BookDetailsModal = ({ book, onClose, onUpdate }) => {
     }
   };
 
+  if (isEditing) {
+    return <EditBookModal book={book} onClose={() => setIsEditing(false)} onSuccess={() => { setIsEditing(false); onUpdate(); }} />;
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -708,6 +712,12 @@ const BookDetailsModal = ({ book, onClose, onUpdate }) => {
           {/* Actions */}
           <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
+              onClick={() => setIsEditing(true)}
+              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Edit Book
+            </button>
+            <button
               onClick={handleDelete}
               className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
             >
@@ -721,6 +731,323 @@ const BookDetailsModal = ({ book, onClose, onUpdate }) => {
             </button>
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+// Edit Book Modal Component
+const EditBookModal = ({ book, onClose, onSuccess }) => {
+  const [formData, setFormData] = useState({
+    title: book.title || '',
+    author: book.author || '',
+    isbn: book.isbn || '',
+    publisher: book.publisher || '',
+    publishedYear: book.publishedYear || '',
+    edition: book.edition || '',
+    category: book.category || 'General',
+    description: book.description || '',
+    coverImage: book.coverImage || '',
+    pages: book.pages || '',
+    language: book.language || 'English',
+    available: book.available !== undefined ? book.available : true,
+    tags: book.tags || []
+  });
+  const [tagInput, setTagInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const categories = [
+    'Dental Anatomy',
+    'Oral Pathology',
+    'Periodontology',
+    'Endodontics',
+    'Prosthodontics',
+    'Oral Surgery',
+    'Orthodontics',
+    'Pediatric Dentistry',
+    'General',
+    'Other'
+  ];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const payload = {
+        ...formData,
+        publishedYear: formData.publishedYear ? parseInt(formData.publishedYear) : undefined,
+        pages: formData.pages ? parseInt(formData.pages) : undefined
+      };
+
+      await api.put(`/books/${book._id}`, payload);
+      onSuccess();
+      onClose();
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to update book');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addTag = () => {
+    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+      setFormData({ ...formData, tags: [...formData.tags, tagInput.trim()] });
+      setTagInput('');
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setFormData({ ...formData, tags: formData.tags.filter(tag => tag !== tagToRemove) });
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-6 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-blue-600" />
+            Edit Book
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Title */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Title *
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="Enter book title"
+              />
+            </div>
+
+            {/* Author */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Author *
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.author}
+                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="Enter author name"
+              />
+            </div>
+
+            {/* ISBN */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                ISBN
+              </label>
+              <input
+                type="text"
+                value={formData.isbn}
+                onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="978-0-123456-78-9"
+              />
+            </div>
+
+            {/* Publisher */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Publisher
+              </label>
+              <input
+                type="text"
+                value={formData.publisher}
+                onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="Publisher name"
+              />
+            </div>
+
+            {/* Published Year */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Published Year
+              </label>
+              <input
+                type="number"
+                value={formData.publishedYear}
+                onChange={(e) => setFormData({ ...formData, publishedYear: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="2024"
+              />
+            </div>
+
+            {/* Edition */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Edition
+              </label>
+              <input
+                type="text"
+                value={formData.edition}
+                onChange={(e) => setFormData({ ...formData, edition: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="5th Edition"
+              />
+            </div>
+
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Category
+              </label>
+              <select
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              >
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Pages */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Pages
+              </label>
+              <input
+                type="number"
+                value={formData.pages}
+                onChange={(e) => setFormData({ ...formData, pages: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="450"
+              />
+            </div>
+
+            {/* Description */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Description
+              </label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                rows="3"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="Brief description of the book"
+              />
+            </div>
+
+            {/* Cover Image URL */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Cover Image URL
+              </label>
+              <input
+                type="url"
+                value={formData.coverImage}
+                onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="https://example.com/cover.jpg"
+              />
+            </div>
+
+            {/* Tags */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Tags
+              </label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  placeholder="Add a tag"
+                />
+                <button
+                  type="button"
+                  onClick={addTag}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {formData.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                  >
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => removeTag(tag)}
+                      className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Available */}
+            <div className="md:col-span-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.available}
+                  onChange={(e) => setFormData({ ...formData, available: e.target.checked })}
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Book is available
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Updating...' : 'Update Book'}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
