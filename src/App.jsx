@@ -48,6 +48,8 @@ import TreatmentProtocols from './pages/TreatmentProtocols';
 import AIQuizGenerator from './pages/AIQuizGenerator';
 import AIFlashcardGenerator from './pages/AIFlashcardGenerator';
 import SpacedRepetition from './pages/SpacedRepetition';
+import RevisionNotes from './pages/RevisionNotes';
+import RevisionNoteDetail from './pages/RevisionNoteDetail';
 
 function App() {
   useEffect(() => {
@@ -85,6 +87,8 @@ function App() {
             <Route path="books" element={<Books />} />
             <Route path="past-papers" element={<PastPapers />} />
             <Route path="photos" element={<PhotoLibrary />} />
+            <Route path="revision-notes" element={<RevisionNotes />} />
+            <Route path="revision-notes/:id" element={<RevisionNoteDetail />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="performance" element={<PerformanceAnalytics />} />
             <Route path="notes" element={<Notes />} />
