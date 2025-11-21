@@ -17,6 +17,8 @@ const AIQuizGenerator = () => {
   const [loading, setLoading] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [generatedQuestions, setGeneratedQuestions] = useState([]);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     topic: '',
@@ -36,7 +38,7 @@ const AIQuizGenerator = () => {
   const fetchSubjects = async () => {
     try {
       const response = await api.get('/subjects');
-      setSubjects(response.data);
+      setSubjects(response.data.subjects || response.data || []);
     } catch (error) {
       console.error('Error fetching subjects:', error);
     }
@@ -44,12 +46,14 @@ const AIQuizGenerator = () => {
 
   const handleGenerate = async () => {
     if (!formData.topic) {
-      alert('Please enter a topic');
+      setError('Please enter a topic');
+      setTimeout(() => setError(''), 3000);
       return;
     }
 
     try {
       setLoading(true);
+      setError('');
       setGeneratedQuestions([]);
 
       const response = await api.post('/ai-quiz-generator/generate', {
@@ -61,9 +65,12 @@ const AIQuizGenerator = () => {
       });
 
       setGeneratedQuestions(response.data.questions);
+      setSuccess(`Generated ${response.data.questions.length} questions successfully!`);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       console.error('Error generating quiz:', error);
-      alert('Failed to generate quiz. Please try again.');
+      setError(error.response?.data?.error || 'Failed to generate quiz. Please try again.');
+      setTimeout(() => setError(''), 5000);
     } finally {
       setLoading(false);
     }
@@ -71,12 +78,14 @@ const AIQuizGenerator = () => {
 
   const handleCreateQuiz = async () => {
     if (!formData.title || !formData.topic || !formData.subject) {
-      alert('Please fill in all required fields');
+      setError('Please fill in all required fields (Title, Topic, and Subject)');
+      setTimeout(() => setError(''), 3000);
       return;
     }
 
     try {
       setLoading(true);
+      setError('');
 
       const response = await api.post('/ai-quiz-generator/create-quiz', {
         title: formData.title,
@@ -90,11 +99,14 @@ const AIQuizGenerator = () => {
         timeLimit: formData.timeLimit
       });
 
-      alert('Quiz created successfully!');
-      navigate(`/quizzes/${response.data.quiz._id}`);
+      setSuccess('Quiz created successfully! Redirecting...');
+      setTimeout(() => {
+        navigate(`/quizzes/${response.data.quiz._id}`);
+      }, 1000);
     } catch (error) {
       console.error('Error creating quiz:', error);
-      alert('Failed to create quiz. Please try again.');
+      setError(error.response?.data?.error || 'Failed to create quiz. Please try again.');
+      setTimeout(() => setError(''), 5000);
     } finally {
       setLoading(false);
     }
@@ -106,6 +118,21 @@ const AIQuizGenerator = () => {
         title="AI Quiz Generator"
         subtitle="Generate custom quizzes instantly using AI - just enter a topic and let AI create the questions"
       />
+
+      {/* Success/Error Messages */}
+      {error && (
+        <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg flex items-center gap-2">
+          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+          <span>{error}</span>
+        </div>
+      )}
+
+      {success && (
+        <div className="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 px-4 py-3 rounded-lg flex items-center gap-2">
+          <CheckCircle className="w-5 h-5 flex-shrink-0" />
+          <span>{success}</span>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Generator Form */}
@@ -150,6 +177,25 @@ const AIQuizGenerator = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Be specific for better results
               </p>
+            </div>
+
+            {/* Subject */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Subject *
+              </label>
+              <select
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                className="input w-full"
+              >
+                <option value="">Select a subject</option>
+                {subjects.map((subject) => (
+                  <option key={subject._id} value={subject._id}>
+                    {subject.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Year */}
