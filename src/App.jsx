@@ -65,6 +65,7 @@ import ResourceCenter from './pages/ResourceCenter';
 import CoursePlanner from './pages/CoursePlanner';
 import TreatmentProtocols from './pages/TreatmentProtocols';
 import AIQuizGenerator from './pages/AIQuizGenerator';
+import AIFlashcardGenerator from './pages/AIFlashcardGenerator';
 import SpacedRepetition from './pages/SpacedRepetition';
 
 function App() {
@@ -138,6 +139,7 @@ function App() {
             <Route path="course-planner" element={<CoursePlanner />} />
             <Route path="treatment-protocols" element={<TreatmentProtocols />} />
             <Route path="ai-quiz-generator" element={<AIQuizGenerator />} />
+            <Route path="ai-flashcard-generator" element={<AIFlashcardGenerator />} />
             <Route path="spaced-repetition" element={<SpacedRepetition />} />
             <Route path="search" element={<Search />} />
             <Route path="settings" element={<Settings />} />

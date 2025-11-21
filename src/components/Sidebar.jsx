@@ -86,6 +86,7 @@ const menuStructure = {
       items: [
         { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
         { icon: Zap, label: 'AI Quiz Generator', path: '/ai-quiz-generator' },
+        { icon: Brain, label: 'AI Flashcard Generator', path: '/ai-flashcard-generator' },
         { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
         { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
         { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
@@ -179,6 +180,7 @@ const menuStructure = {
       items: [
         { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
         { icon: Zap, label: 'AI Quiz Generator', path: '/ai-quiz-generator' },
+        { icon: Brain, label: 'AI Flashcard Generator', path: '/ai-flashcard-generator' },
         { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
         { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
         { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
@@ -295,6 +297,7 @@ const menuStructure = {
       items: [
         { icon: Sparkles, label: 'AI Study Assistant', path: '/ai-study-assistant' },
         { icon: Zap, label: 'AI Quiz Generator', path: '/ai-quiz-generator' },
+        { icon: Brain, label: 'AI Flashcard Generator', path: '/ai-flashcard-generator' },
         { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
         { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
         { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
