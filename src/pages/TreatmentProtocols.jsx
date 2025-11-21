@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import SectionHeader from '../components/SectionHeader';
 import Loading from '../components/Loading';
+import AddProtocolModal from '../components/AddProtocolModal';
+import EditProtocolModal from '../components/EditProtocolModal';
+import ProtocolDetailModal from '../components/ProtocolDetailModal';
 import {
   FileText,
   Search,
@@ -13,7 +16,8 @@ import {
   BookOpen,
   Award,
   ChevronRight,
-  Star
+  Star,
+  Plus
 } from 'lucide-react';
 
 const TreatmentProtocols = () => {
@@ -24,6 +28,9 @@ const TreatmentProtocols = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
   const [showVerified, setShowVerified] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedProtocol, setSelectedProtocol] = useState(null);
+  const [editingProtocol, setEditingProtocol] = useState(null);
 
   const categories = [
     'All',
@@ -84,11 +91,42 @@ const TreatmentProtocols = () => {
     return FileText;
   };
 
+  const handleProtocolClick = (protocol) => {
+    setSelectedProtocol(protocol);
+  };
+
+  const handleEdit = (protocol, e) => {
+    e.stopPropagation();
+    setEditingProtocol(protocol);
+  };
+
+  const handleDelete = async (protocolId, e) => {
+    e.stopPropagation();
+    if (!confirm('Are you sure you want to delete this protocol?')) return;
+
+    try {
+      await api.delete(`/treatment-protocols/${protocolId}`);
+      fetchProtocols();
+    } catch (error) {
+      console.error('Error deleting protocol:', error);
+      alert('Failed to delete protocol');
+    }
+  };
+
   return (
     <div>
       <SectionHeader
         title="Treatment Protocols"
         subtitle="Evidence-based clinical procedures with step-by-step guidelines"
+        action={
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="btn-primary flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            Add Protocol
+          </button>
+        }
       />
 
       {/* Search and Filters */}
@@ -171,7 +209,7 @@ const TreatmentProtocols = () => {
             <div
               key={protocol._id}
               className="card hover:shadow-lg transition-all cursor-pointer group"
-              onClick={() => navigate(`/treatment-protocols/${protocol._id}`)}
+              onClick={() => handleProtocolClick(protocol)}
             >
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
@@ -294,6 +332,44 @@ const TreatmentProtocols = () => {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Modals */}
+      {showAddModal && (
+        <AddProtocolModal
+          onClose={() => setShowAddModal(false)}
+          onSuccess={() => {
+            setShowAddModal(false);
+            fetchProtocols();
+          }}
+        />
+      )}
+
+      {selectedProtocol && (
+        <ProtocolDetailModal
+          protocol={selectedProtocol}
+          onClose={() => setSelectedProtocol(null)}
+          onEdit={(protocol) => {
+            setSelectedProtocol(null);
+            setEditingProtocol(protocol);
+          }}
+          onDelete={(protocolId) => {
+            setSelectedProtocol(null);
+            handleDelete(protocolId, { stopPropagation: () => {} });
+          }}
+          onUpdate={fetchProtocols}
+        />
+      )}
+
+      {editingProtocol && (
+        <EditProtocolModal
+          protocol={editingProtocol}
+          onClose={() => setEditingProtocol(null)}
+          onSuccess={() => {
+            setEditingProtocol(null);
+            fetchProtocols();
+          }}
+        />
       )}
     </div>
   );
