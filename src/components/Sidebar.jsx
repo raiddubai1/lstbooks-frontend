@@ -26,7 +26,8 @@ import {
   ChevronDown,
   ChevronRight,
   Zap,
-  AlertTriangle
+  AlertTriangle,
+  Video
 } from 'lucide-react';
 import clsx from 'clsx';
 import { getUserRole } from '../utils/auth';
@@ -52,6 +53,7 @@ const menuStructure = {
         { icon: BookOpen, label: 'Books', path: '/books' },
         { icon: FileText, label: 'Past Papers', path: '/past-papers' },
         { icon: FileCheck, label: 'Revision Notes', path: '/revision-notes' },
+        { icon: Video, label: 'Videos', path: '/videos' },
         { icon: Image, label: 'Clinical Photos', path: '/photos' },
         { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
       ]
@@ -120,6 +122,7 @@ const menuStructure = {
         { icon: BookOpen, label: 'Books', path: '/books' },
         { icon: FileText, label: 'Past Papers', path: '/past-papers' },
         { icon: FileCheck, label: 'Revision Notes', path: '/revision-notes' },
+        { icon: Video, label: 'Videos', path: '/videos' },
         { icon: Image, label: 'Clinical Photos', path: '/photos' },
         { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
       ]
@@ -209,6 +212,7 @@ const menuStructure = {
         { icon: BookOpen, label: 'Books', path: '/books' },
         { icon: FileText, label: 'Past Papers', path: '/past-papers' },
         { icon: FileCheck, label: 'Revision Notes', path: '/revision-notes' },
+        { icon: Video, label: 'Videos', path: '/videos' },
         { icon: Image, label: 'Clinical Photos', path: '/photos' },
         { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
       ]
