@@ -16,19 +16,11 @@ import {
   BarChart3,
   GraduationCap,
   TrendingUp,
-  Target,
   FileText,
   Bookmark,
-  MessageSquare,
-  UsersRound,
   FileCheck,
-  Share2,
   Sparkles,
-  Trophy,
-  Award,
-  HelpCircle,
   Image,
-  Upload,
   Calendar,
   Syringe,
   ChevronDown,
@@ -50,37 +42,33 @@ const menuStructure = {
     },
     {
       type: 'section',
-      title: 'Learning Content',
+      title: 'Study Resources',
       icon: BookOpen,
       defaultOpen: true,
       items: [
         { icon: GraduationCap, label: 'Years', path: '/years' },
         { icon: BookOpen, label: 'Subjects', path: '/subjects' },
-        { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
-        { icon: FlaskConical, label: 'Labs', path: '/labs' },
-        { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+        { icon: BookOpen, label: 'Books', path: '/books' },
+        { icon: FileText, label: 'Past Papers', path: '/past-papers' },
+        { icon: Image, label: 'Clinical Photos', path: '/photos' },
         { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
       ]
     },
     {
       type: 'section',
-      title: 'Study Tools',
+      title: 'Practice & Learn',
       icon: Brain,
       defaultOpen: true,
       items: [
         { icon: Brain, label: 'Quizzes', path: '/quizzes' },
-        { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
-        { icon: TrendingUp, label: 'Spaced Repetition', path: '/spaced-repetition' },
-        { icon: BookOpen, label: 'Books', path: '/books' },
-        { icon: FileText, label: 'Past Papers', path: '/past-papers' },
-        { icon: Image, label: 'Photo Library', path: '/photos' },
-        { icon: FileText, label: 'Notes', path: '/notes' },
-        { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+        { icon: CreditCard, label: 'Flashcards', path: '/spaced-repetition' },
+        { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+        { icon: FlaskConical, label: 'Lab Procedures', path: '/labs' },
       ]
     },
     {
       type: 'section',
-      title: 'AI Assistants',
+      title: 'AI Tools',
       icon: Sparkles,
       defaultOpen: false,
       items: [
@@ -89,42 +77,17 @@ const menuStructure = {
         { icon: Brain, label: 'AI Flashcard Generator', path: '/ai-flashcard-generator' },
         { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
         { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
-        { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
       ]
     },
     {
       type: 'section',
-      title: 'Progress & Analytics',
+      title: 'My Progress',
       icon: BarChart3,
       defaultOpen: false,
       items: [
-        { icon: TrendingUp, label: 'Progress', path: '/progress' },
-        { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-        { icon: Brain, label: 'AI Performance', path: '/performance' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Gamification',
-      icon: Trophy,
-      defaultOpen: false,
-      items: [
-        { icon: Trophy, label: 'Gamification', path: '/gamification' },
-        { icon: Award, label: 'Achievements', path: '/achievements' },
-        { icon: Target, label: 'Challenges', path: '/challenges' },
-        { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Social',
-      icon: UsersRound,
-      defaultOpen: false,
-      items: [
-        { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
-        { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
-        { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
-        { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
+        { icon: TrendingUp, label: 'Performance Analytics', path: '/performance' },
+        { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+        { icon: FileText, label: 'Notes', path: '/notes' },
       ]
     },
     {
@@ -144,37 +107,33 @@ const menuStructure = {
     },
     {
       type: 'section',
-      title: 'Learning Content',
+      title: 'Study Resources',
       icon: BookOpen,
       defaultOpen: true,
       items: [
         { icon: GraduationCap, label: 'Years', path: '/years' },
         { icon: BookOpen, label: 'Subjects', path: '/subjects' },
-        { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
-        { icon: FlaskConical, label: 'Labs', path: '/labs' },
-        { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+        { icon: BookOpen, label: 'Books', path: '/books' },
+        { icon: FileText, label: 'Past Papers', path: '/past-papers' },
+        { icon: Image, label: 'Clinical Photos', path: '/photos' },
         { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
       ]
     },
     {
       type: 'section',
-      title: 'Study Tools',
+      title: 'Practice & Learn',
       icon: Brain,
       defaultOpen: true,
       items: [
         { icon: Brain, label: 'Quizzes', path: '/quizzes' },
-        { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
-        { icon: TrendingUp, label: 'Spaced Repetition', path: '/spaced-repetition' },
-        { icon: BookOpen, label: 'Books', path: '/books' },
-        { icon: FileText, label: 'Past Papers', path: '/past-papers' },
-        { icon: Image, label: 'Photo Library', path: '/photos' },
-        { icon: FileText, label: 'Notes', path: '/notes' },
-        { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+        { icon: CreditCard, label: 'Flashcards', path: '/spaced-repetition' },
+        { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+        { icon: FlaskConical, label: 'Lab Procedures', path: '/labs' },
       ]
     },
     {
       type: 'section',
-      title: 'AI Assistants',
+      title: 'AI Tools',
       icon: Sparkles,
       defaultOpen: false,
       items: [
@@ -183,53 +142,27 @@ const menuStructure = {
         { icon: Brain, label: 'AI Flashcard Generator', path: '/ai-flashcard-generator' },
         { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
         { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
-        { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
       ]
     },
     {
       type: 'section',
-      title: 'Teacher Dashboard',
+      title: 'Teacher Tools',
       icon: Users,
       defaultOpen: false,
       items: [
         { icon: Users, label: 'Student Analytics', path: '/student-analytics' },
-        { icon: Upload, label: 'Resource Center', path: '/resource-center' },
         { icon: Calendar, label: 'Course Planner', path: '/course-planner' },
       ]
     },
     {
       type: 'section',
-      title: 'Progress & Analytics',
+      title: 'My Progress',
       icon: BarChart3,
       defaultOpen: false,
       items: [
-        { icon: TrendingUp, label: 'Progress', path: '/progress' },
-        { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-        { icon: Brain, label: 'AI Performance', path: '/performance' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Gamification',
-      icon: Trophy,
-      defaultOpen: false,
-      items: [
-        { icon: Trophy, label: 'Gamification', path: '/gamification' },
-        { icon: Award, label: 'Achievements', path: '/achievements' },
-        { icon: Target, label: 'Challenges', path: '/challenges' },
-        { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Social',
-      icon: UsersRound,
-      defaultOpen: false,
-      items: [
-        { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
-        { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
-        { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
-        { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
+        { icon: TrendingUp, label: 'Performance Analytics', path: '/performance' },
+        { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+        { icon: FileText, label: 'Notes', path: '/notes' },
       ]
     },
     {
@@ -256,42 +189,37 @@ const menuStructure = {
         { icon: Users, label: 'User Management', path: '/admin/users' },
         { icon: FileCheck, label: 'Content Approval', path: '/admin/content' },
         { icon: BarChart3, label: 'Admin Analytics', path: '/admin/analytics' },
-        { icon: Shield, label: 'Settings', path: '/settings' },
       ]
     },
     {
       type: 'section',
-      title: 'Learning Content',
+      title: 'Study Resources',
       icon: BookOpen,
       defaultOpen: false,
       items: [
         { icon: GraduationCap, label: 'Years', path: '/years' },
         { icon: BookOpen, label: 'Subjects', path: '/subjects' },
-        { icon: Stethoscope, label: 'Clinical Skills', path: '/clinical-skills' },
-        { icon: FlaskConical, label: 'Labs', path: '/labs' },
-        { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+        { icon: BookOpen, label: 'Books', path: '/books' },
+        { icon: FileText, label: 'Past Papers', path: '/past-papers' },
+        { icon: Image, label: 'Clinical Photos', path: '/photos' },
         { icon: Syringe, label: 'Treatment Protocols', path: '/treatment-protocols' },
       ]
     },
     {
       type: 'section',
-      title: 'Study Tools',
+      title: 'Practice & Learn',
       icon: Brain,
       defaultOpen: false,
       items: [
         { icon: Brain, label: 'Quizzes', path: '/quizzes' },
-        { icon: CreditCard, label: 'Flashcards', path: '/flashcards' },
-        { icon: TrendingUp, label: 'Spaced Repetition', path: '/spaced-repetition' },
-        { icon: BookOpen, label: 'Books', path: '/books' },
-        { icon: FileText, label: 'Past Papers', path: '/past-papers' },
-        { icon: Image, label: 'Photo Library', path: '/photos' },
-        { icon: FileText, label: 'Notes', path: '/notes' },
-        { icon: Bookmark, label: 'Bookmarks', path: '/bookmarks' },
+        { icon: CreditCard, label: 'Flashcards', path: '/spaced-repetition' },
+        { icon: ClipboardList, label: 'OSCE Stations', path: '/osce' },
+        { icon: FlaskConical, label: 'Lab Procedures', path: '/labs' },
       ]
     },
     {
       type: 'section',
-      title: 'AI Assistants',
+      title: 'AI Tools',
       icon: Sparkles,
       defaultOpen: false,
       items: [
@@ -300,42 +228,6 @@ const menuStructure = {
         { icon: Brain, label: 'AI Flashcard Generator', path: '/ai-flashcard-generator' },
         { icon: Stethoscope, label: 'OSCE Coach', path: '/osce-coach' },
         { icon: FlaskConical, label: 'Case Generator', path: '/case-generator' },
-        { icon: HelpCircle, label: 'AI Guide', path: '/ai-guide' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Progress & Analytics',
-      icon: BarChart3,
-      defaultOpen: false,
-      items: [
-        { icon: TrendingUp, label: 'Progress', path: '/progress' },
-        { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-        { icon: Brain, label: 'AI Performance', path: '/performance' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Gamification',
-      icon: Trophy,
-      defaultOpen: false,
-      items: [
-        { icon: Trophy, label: 'Gamification', path: '/gamification' },
-        { icon: Award, label: 'Achievements', path: '/achievements' },
-        { icon: Target, label: 'Challenges', path: '/challenges' },
-        { icon: BarChart3, label: 'Leaderboard', path: '/leaderboard' },
-      ]
-    },
-    {
-      type: 'section',
-      title: 'Social',
-      icon: UsersRound,
-      defaultOpen: false,
-      items: [
-        { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
-        { icon: UsersRound, label: 'Study Groups', path: '/study-groups' },
-        { icon: FileCheck, label: 'Peer Reviews', path: '/peer-reviews' },
-        { icon: Share2, label: 'Shared Resources', path: '/shared-resources' },
       ]
     },
     {

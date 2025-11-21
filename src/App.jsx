@@ -9,33 +9,15 @@ import { initDB } from './utils/offlineStorage';
 import Home from './pages/Home';
 import Years from './pages/Years';
 import YearDetail from './pages/YearDetail';
-import Progress from './pages/Progress';
-import Analytics from './pages/Analytics';
 import PerformanceAnalytics from './pages/PerformanceAnalytics';
-import AIGuide from './pages/AIGuide';
 import Notes from './pages/Notes';
 import Bookmarks from './pages/Bookmarks';
 import Reminders from './pages/Reminders';
-import Discussions from './pages/Discussions';
-import DiscussionDetail from './pages/DiscussionDetail';
-import StudyGroups from './pages/StudyGroups';
-import StudyGroupDetail from './pages/StudyGroupDetail';
-import PeerReviews from './pages/PeerReviews';
-import PeerReviewDetail from './pages/PeerReviewDetail';
-import SharedResources from './pages/SharedResources';
-import SharedResourceDetail from './pages/SharedResourceDetail';
 import AIStudyAssistant from './pages/AIStudyAssistant';
 import OSCECoach from './pages/OSCECoach';
 import CaseGenerator from './pages/CaseGenerator';
-import Gamification from './pages/Gamification';
-import Leaderboard from './pages/Leaderboard';
-import Achievements from './pages/Achievements';
-import Challenges from './pages/Challenges';
 import Subjects from './pages/Subjects';
 import SubjectDetail from './pages/SubjectDetail';
-import ClinicalSkills from './pages/ClinicalSkills';
-import Skills from './pages/Skills';
-import SkillDetail from './pages/SkillDetail';
 import Labs from './pages/Labs';
 import LabDetail from './pages/LabDetail';
 import OSCE from './pages/OSCE';
@@ -61,7 +43,6 @@ import AdminContent from './pages/AdminContent';
 import AdminUsers from './pages/AdminUsers';
 import StudentAnalytics from './pages/StudentAnalytics';
 import StudentDetail from './pages/StudentDetail';
-import ResourceCenter from './pages/ResourceCenter';
 import CoursePlanner from './pages/CoursePlanner';
 import TreatmentProtocols from './pages/TreatmentProtocols';
 import AIQuizGenerator from './pages/AIQuizGenerator';
@@ -91,9 +72,6 @@ function App() {
             <Route path="years/:id" element={<YearDetail />} />
             <Route path="subjects" element={<Subjects />} />
             <Route path="subjects/:id" element={<SubjectDetail />} />
-            <Route path="clinical-skills" element={<ClinicalSkills />} />
-            <Route path="skills" element={<Skills />} />
-            <Route path="skills/:id" element={<SkillDetail />} />
             <Route path="labs" element={<Labs />} />
             <Route path="labs/:id" element={<LabDetail />} />
             <Route path="osce" element={<OSCE />} />
@@ -108,34 +86,18 @@ function App() {
             <Route path="past-papers" element={<PastPapers />} />
             <Route path="photos" element={<PhotoLibrary />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="progress" element={<Progress />} />
-            <Route path="analytics" element={<Analytics />} />
             <Route path="performance" element={<PerformanceAnalytics />} />
-            <Route path="ai-guide" element={<AIGuide />} />
             <Route path="notes" element={<Notes />} />
             <Route path="bookmarks" element={<Bookmarks />} />
             <Route path="reminders" element={<Reminders />} />
-            <Route path="discussions" element={<Discussions />} />
-            <Route path="discussions/:id" element={<DiscussionDetail />} />
-            <Route path="study-groups" element={<StudyGroups />} />
-            <Route path="study-groups/:id" element={<StudyGroupDetail />} />
-            <Route path="peer-reviews" element={<PeerReviews />} />
-            <Route path="peer-reviews/:id" element={<PeerReviewDetail />} />
-            <Route path="shared-resources" element={<SharedResources />} />
-            <Route path="shared-resources/:id" element={<SharedResourceDetail />} />
             <Route path="ai-study-assistant" element={<AIStudyAssistant />} />
             <Route path="osce-coach" element={<OSCECoach />} />
             <Route path="case-generator" element={<CaseGenerator />} />
-            <Route path="gamification" element={<Gamification />} />
-            <Route path="leaderboard" element={<Leaderboard />} />
-            <Route path="achievements" element={<Achievements />} />
-            <Route path="challenges" element={<Challenges />} />
             <Route path="admin/analytics" element={<AdminAnalytics />} />
             <Route path="admin/content" element={<AdminContent />} />
             <Route path="admin/users" element={<AdminUsers />} />
             <Route path="student-analytics" element={<StudentAnalytics />} />
             <Route path="student-analytics/:studentId" element={<StudentDetail />} />
-            <Route path="resource-center" element={<ResourceCenter />} />
             <Route path="course-planner" element={<CoursePlanner />} />
             <Route path="treatment-protocols" element={<TreatmentProtocols />} />
             <Route path="ai-quiz-generator" element={<AIQuizGenerator />} />
