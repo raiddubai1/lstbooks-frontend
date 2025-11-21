@@ -3,6 +3,8 @@ import api from '../services/api';
 import SectionHeader from '../components/SectionHeader';
 import Loading from '../components/Loading';
 import UploadResourceModal from '../components/UploadResourceModal';
+import EditResourceModal from '../components/EditResourceModal';
+import ResourceDetailModal from '../components/ResourceDetailModal';
 import {
   Upload,
   FileText,
@@ -24,6 +26,8 @@ const ResourceCenter = () => {
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedResource, setSelectedResource] = useState(null);
+  const [editingResource, setEditingResource] = useState(null);
   const [selectedType, setSelectedType] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [stats, setStats] = useState({
@@ -299,11 +303,17 @@ const ResourceCenter = () => {
               {/* Actions */}
               <div className="flex gap-2">
                 <button
-                  onClick={() => handleDownload(resource)}
+                  onClick={() => setSelectedResource(resource)}
                   className="flex-1 btn-secondary text-sm py-2"
                 >
-                  <Download className="w-4 h-4 inline mr-1" />
-                  Download
+                  <Eye className="w-4 h-4 inline mr-1" />
+                  View
+                </button>
+                <button
+                  onClick={() => setEditingResource(resource)}
+                  className="btn-secondary text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 p-2"
+                >
+                  <Edit className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(resource._id)}
@@ -317,12 +327,39 @@ const ResourceCenter = () => {
         </div>
       )}
 
-      {/* Add Resource Modal */}
+      {/* Modals */}
       {showAddModal && (
         <UploadResourceModal
           onClose={() => setShowAddModal(false)}
           onSuccess={() => {
             setShowAddModal(false);
+            fetchResources();
+          }}
+        />
+      )}
+
+      {selectedResource && (
+        <ResourceDetailModal
+          resource={selectedResource}
+          onClose={() => setSelectedResource(null)}
+          onEdit={(resource) => {
+            setSelectedResource(null);
+            setEditingResource(resource);
+          }}
+          onDelete={(resourceId) => {
+            setSelectedResource(null);
+            handleDelete(resourceId);
+          }}
+          onUpdate={fetchResources}
+        />
+      )}
+
+      {editingResource && (
+        <EditResourceModal
+          resource={editingResource}
+          onClose={() => setEditingResource(null)}
+          onSuccess={() => {
+            setEditingResource(null);
             fetchResources();
           }}
         />
