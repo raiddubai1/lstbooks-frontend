@@ -1,7 +1,11 @@
-import { X, Eye, Heart, Star, CheckCircle, Download, Calendar } from 'lucide-react';
+import { useState } from 'react';
+import { X, Eye, Heart, Star, CheckCircle, Download, Calendar, Edit } from 'lucide-react';
 import api from '../services/api';
+import EditPhotoModal from './EditPhotoModal';
 
 const PhotoDetailModal = ({ photo, onClose, onUpdate, onLike }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this photo?')) return;
 
@@ -14,6 +18,10 @@ const PhotoDetailModal = ({ photo, onClose, onUpdate, onLike }) => {
       alert('Failed to delete photo');
     }
   };
+
+  if (isEditing) {
+    return <EditPhotoModal photo={photo} onClose={() => setIsEditing(false)} onSuccess={() => { setIsEditing(false); onUpdate(); }} />;
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -138,7 +146,7 @@ const PhotoDetailModal = ({ photo, onClose, onUpdate, onLike }) => {
           )}
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -159,6 +167,13 @@ const PhotoDetailModal = ({ photo, onClose, onUpdate, onLike }) => {
               <Download className="w-5 h-5" />
               Download
             </a>
+            <button
+              onClick={() => setIsEditing(true)}
+              className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2"
+            >
+              <Edit className="w-5 h-5" />
+              Edit
+            </button>
             <button
               onClick={handleDelete}
               className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
