@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getQuizzes, getSubjects, getQuizStats } from '../services/api';
-import { Search, Plus, BookOpen, Clock, Award, Users } from 'lucide-react';
+import { Search, Plus, BookOpen, Clock, Award, Users, Sparkles } from 'lucide-react';
 import AddQuizModal from '../components/AddQuizModal';
 
 const Quizzes = () => {
+  const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState([]);
@@ -94,14 +95,24 @@ const Quizzes = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Quizzes</h1>
           <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-2">Test your knowledge with interactive quizzes</p>
         </div>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-blue-600 dark:bg-blue-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 text-sm md:text-base whitespace-nowrap"
-        >
-          <Plus className="w-4 h-4 md:w-5 md:h-5" />
-          <span className="hidden sm:inline">Add Quiz</span>
-          <span className="sm:hidden">Add</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/ai-quiz-generator')}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-700 dark:to-pink-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 transition-all flex items-center gap-2 text-sm md:text-base whitespace-nowrap shadow-lg hover:shadow-xl"
+          >
+            <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="hidden sm:inline">Generate with AI</span>
+            <span className="sm:hidden">AI</span>
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-blue-600 dark:bg-blue-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 text-sm md:text-base whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="hidden sm:inline">Add Quiz</span>
+            <span className="sm:hidden">Add</span>
+          </button>
+        </div>
       </div>
 
       {/* Search and Filters */}
