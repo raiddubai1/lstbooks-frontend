@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import SectionHeader from '../components/SectionHeader';
 import Loading from '../components/Loading';
+import AddCoursePlanModal from '../components/AddCoursePlanModal';
+import EditCoursePlanModal from '../components/EditCoursePlanModal';
+import CoursePlanDetailModal from '../components/CoursePlanDetailModal';
 import {
   Calendar,
   Plus,
@@ -19,6 +22,9 @@ const CoursePlanner = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [coursePlans, setCoursePlans] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [editingPlan, setEditingPlan] = useState(null);
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -146,7 +152,7 @@ const CoursePlanner = () => {
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">My Course Plans</h3>
           <button
-            onClick={() => navigate('/course-planner/new')}
+            onClick={() => setShowAddModal(true)}
             className="btn-primary flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
@@ -166,7 +172,7 @@ const CoursePlanner = () => {
             Create your first course plan to organize your curriculum
           </p>
           <button
-            onClick={() => navigate('/course-planner/new')}
+            onClick={() => setShowAddModal(true)}
             className="btn-primary"
           >
             Create First Course Plan
@@ -256,14 +262,14 @@ const CoursePlanner = () => {
               {/* Actions */}
               <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <button
-                  onClick={() => navigate(`/course-planner/${plan._id}`)}
+                  onClick={() => setSelectedPlan(plan)}
                   className="flex-1 btn-secondary text-sm py-2"
                 >
                   <Eye className="w-4 h-4 inline mr-1" />
                   View
                 </button>
                 <button
-                  onClick={() => navigate(`/course-planner/${plan._id}/edit`)}
+                  onClick={() => setEditingPlan(plan)}
                   className="btn-secondary text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 p-2"
                 >
                   <Edit className="w-4 h-4" />
@@ -278,6 +284,44 @@ const CoursePlanner = () => {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Modals */}
+      {showAddModal && (
+        <AddCoursePlanModal
+          onClose={() => setShowAddModal(false)}
+          onSuccess={() => {
+            setShowAddModal(false);
+            fetchCoursePlans();
+          }}
+        />
+      )}
+
+      {selectedPlan && (
+        <CoursePlanDetailModal
+          plan={selectedPlan}
+          onClose={() => setSelectedPlan(null)}
+          onEdit={(plan) => {
+            setSelectedPlan(null);
+            setEditingPlan(plan);
+          }}
+          onDelete={(planId) => {
+            setSelectedPlan(null);
+            handleDelete(planId);
+          }}
+          onUpdate={fetchCoursePlans}
+        />
+      )}
+
+      {editingPlan && (
+        <EditCoursePlanModal
+          plan={editingPlan}
+          onClose={() => setEditingPlan(null)}
+          onSuccess={() => {
+            setEditingPlan(null);
+            fetchCoursePlans();
+          }}
+        />
       )}
     </div>
   );
